@@ -1,42 +1,30 @@
 #!/usr/bin/env ruby
 #encoding=utf-8
 
+$default_keyvalues_file = 'default_keyvalues.yaml'
+
 class KeyValue
+  KeyError = Class.new RuntimeError
+
   include DataMapper::Resource
   property :k,  String, key: true
   property :v,  Text
 
-  @@_cache = {}
-  @@_has_key = {}
+  @@_default = YAML.load_file $default_keyvalues_file
   class << self
     def [](key)
-      if @@_has_key[key]
-        @@_cache[key]
-      elsif @@_has_key[key].nil?
-        row = first(k: key.to_s)
-        if row.nil?
-          @@_has_key[key] = false
-          nil
-        else
-          @@_has_key[key] = true
-          YAML.load(row.v)
-        end
-      else
-        nil
-      end
+      key = key.to_s
+      row = first(k: key)
+      val = row.nil? ? @@_default[key] : JSON.parse(row.v)
+      throw KeyError.new("Key `#{key}' does not exist.`") if val.nil?
+      val
     end
     def []=(key, value)
-      @@_has_key.store  key, true
-      @@_cache.store    key, (value.frozen? ? value : value.clone)
-      if count(k: key) == 0
-        create(k: key, v: value.to_yaml)
-      else
-        all(k: key).update(v: value.to_yaml)
-      end
+      all(k: key).update(v: value.to_yaml)
       value
     end
     def keys()
-      all.map(&:key)
+      all.map(&:k)
     end
   end
 end
