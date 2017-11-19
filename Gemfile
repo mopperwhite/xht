@@ -1,5 +1,7 @@
+source 'https://gems.ruby-china.org'
 gem 'bundler'
 gem 'bcrypt'
+gem 'mechanize'
 gem 'sinatra', require: 'sinatra/base'
 gem 'data_mapper'
 gem 'dm-sqlite-adapter', require: false

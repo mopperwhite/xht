@@ -1,2 +1,9 @@
 ---
-authorize: false
+authorize:    false
+dir_max_len:  95
+dir_lang:     en
+save_dir:     ./doujinshi
+user_agent:   Windows Mozilla
+use_http_proxy:   false
+http_proxy_host:  127.0.0.1
+http_proxy_port:  12301

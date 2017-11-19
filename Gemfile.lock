@@ -1,4 +1,5 @@
 GEM
+  remote: https://gems.ruby-china.org/
   specs:
     addressable (2.5.1)
       public_suffix (~> 2.0, >= 2.0.2)
@@ -53,14 +54,36 @@ GEM
       dm-core (~> 1.2.0)
     do_sqlite3 (0.10.17)
       data_objects (= 0.10.17)
+    domain_name (0.5.20161129)
+      unf (>= 0.0.5, < 1.0.0)
     equatable (0.5.0)
     fastercsv (1.5.5)
     hitimes (1.2.6)
+    http-cookie (1.0.3)
+      domain_name (~> 0.5)
     json (1.8.3)
     json_pure (1.8.3)
+    mechanize (2.7.5)
+      domain_name (~> 0.5, >= 0.5.1)
+      http-cookie (~> 1.0)
+      mime-types (>= 1.17.2)
+      net-http-digest_auth (~> 1.1, >= 1.1.1)
+      net-http-persistent (~> 2.5, >= 2.5.2)
+      nokogiri (~> 1.6)
+      ntlm-http (~> 0.1, >= 0.1.1)
+      webrobots (>= 0.0.9, < 0.2)
+    mime-types (3.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2016.0521)
+    mini_portile2 (2.2.0)
     multi_json (1.12.1)
     mustermann (1.0.0)
     necromancer (0.4.0)
+    net-http-digest_auth (1.4.1)
+    net-http-persistent (2.9.4)
+    nokogiri (1.8.0)
+      mini_portile2 (~> 2.2.0)
+    ntlm-http (0.1.1)
     pastel (0.7.2)
       equatable (~> 0.5.0)
       tty-color (~> 0.4.0)
@@ -87,7 +110,11 @@ GEM
       tty-reader (~> 0.1.0)
     tty-reader (0.1.0)
       wisper (~> 2.0.0)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.2)
     uuidtools (2.1.5)
+    webrobots (0.1.2)
     wisper (2.0.0)
 
 PLATFORMS
@@ -99,6 +126,7 @@ DEPENDENCIES
   data_mapper
   dm-migrations
   dm-sqlite-adapter
+  mechanize
   sinatra
   tty-prompt
 
