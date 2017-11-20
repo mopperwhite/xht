@@ -3,6 +3,8 @@
 require './lib/init'
 require './lib/dsl_builder'
 require './lib/db'
+require './lib/downloader'
+require './lib/importer'
 require './lib/app'
 
 run WebViewer

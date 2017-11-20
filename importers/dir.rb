@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #encoding=utf-8
-Importer.register :old do |from_dir, root|
+Importer.register :dir do |from_dir, root|
   meta_file = File.join(from_dir, 'meta.yaml')
   dir_name = File.basename(from_dir)
   dist_dir = File.join(root, dir_name)
@@ -35,5 +35,6 @@ Importer.register :old do |from_dir, root|
     images: doujinshi.images
   ).to_yaml
 
+  doujinshi.set_dir(dir_name)
   doujinshi.download_task.finish!
 end

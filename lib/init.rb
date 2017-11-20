@@ -6,6 +6,7 @@ require 'uri'
 require 'fiber'
 require 'fileutils'
 require 'logger'
+require 'tempfile'
 require 'bundler/setup'
 Bundler.require(:default)
 

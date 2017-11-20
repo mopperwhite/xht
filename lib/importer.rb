@@ -31,6 +31,10 @@ module Importer
       fx == fy ? nx <=> ny : fx <=> fy
     }
   end
+
+  def importers
+    $importers.keys
+  end
 end
 
 Dir['./importers/*.rb'].each do |f|
