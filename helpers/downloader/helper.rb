@@ -1,12 +1,13 @@
 #!/usr/bin/env ruby
 #encoding=utf-8
-module DownloadHelper
+module Downloader
   module_function
   def cut_dir(str, len)
     str = str.clone
     [
-      /\(.+\)/,
-      /\[.+\]/
+      /\{.+?\}/,
+      /\(.+?\)/,
+      /\[.+?\]/
     ].each do |pat|
       break if str.length <= len
       str.gsub!(pat, '')
@@ -28,7 +29,7 @@ module DownloadHelper
         if @meta.title_lang.has_key? default_lang
           @meta.title_lang[default_lang]
         elsif @meta.title_lang.has_key? :en
-          @meta.title_lang[:en]
+          @meta.title_lang[:english]
         else
           @meta.title_lang.values.first
         end
@@ -40,7 +41,7 @@ module DownloadHelper
     title = cut_dir(title, max_length) if 
       max_length.is_a?(Numeric) && 
       max_length > 0 && 
-      title > max_length
+      title.length > max_length
     title
   end
 end

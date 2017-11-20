@@ -1,0 +1,44 @@
+[
+{
+    "domain": ".nhentai.net",
+    "expirationDate": 1542669909.943619,
+    "hostOnly": false,
+    "httpOnly": true,
+    "name": "__cfduid",
+    "path": "/",
+    "sameSite": "no_restriction",
+    "secure": false,
+    "session": false,
+    "storeId": "1",
+    "value": "d9da370003d842229797ec1046367e9f71511133909",
+    "id": 1
+},
+{
+    "domain": ".nhentai.net",
+    "expirationDate": 1574205912,
+    "hostOnly": false,
+    "httpOnly": false,
+    "name": "_ga",
+    "path": "/",
+    "sameSite": "no_restriction",
+    "secure": false,
+    "session": false,
+    "storeId": "1",
+    "value": "GA1.2.902637303.1511133912",
+    "id": 2
+},
+{
+    "domain": ".nhentai.net",
+    "expirationDate": 1511220312,
+    "hostOnly": false,
+    "httpOnly": false,
+    "name": "_gid",
+    "path": "/",
+    "sameSite": "no_restriction",
+    "secure": false,
+    "session": false,
+    "storeId": "1",
+    "value": "GA1.2.1918584170.1511133912",
+    "id": 3
+}
+]

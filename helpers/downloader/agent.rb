@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #encoding=utf-8
-module DownloaderAgent
+module Downloader
   def initialize_agent()
     @agent = Mechanize.new
     @agent.user_agent_alias = KeyValue['user_agent']

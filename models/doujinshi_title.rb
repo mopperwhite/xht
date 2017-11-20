@@ -3,7 +3,7 @@
 class DoujinshiTitle
   include DataMapper::Resource
   property :id,         Serial
-  property :title,      String
+  property :title,      String, length: 0..500
   property :has_lang,   Boolean
   property :lang,       String
 

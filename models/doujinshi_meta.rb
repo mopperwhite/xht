@@ -9,6 +9,7 @@ class DoujinshiMeta
   include DataMapper::Resource
   property :id,         Serial
   property :author,     String
+  property :group,      String
   property :language,   String
   property :category,   String
   property :description,Text
@@ -38,14 +39,14 @@ class DoujinshiMeta
     )
   end
 
-  def DoujinshiMeta.from_struct(meta)
+  def DoujinshiMeta.from_struct(meta, doujinshi)
     h = meta.to_h
     title = h.delete :title
     title_lang = h.delete :title_lang
     tags = h.delete :tags
     characters = h.delete :characters
 
-    m = create(h)
+    m = create(h.merge(doujinshi_id: doujinshi.id))
     m.add_tags tags
     m.add_characters characters
     m.add_title(title) unless title.nil?

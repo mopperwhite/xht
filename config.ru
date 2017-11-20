@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 #encoding=utf-8
-require './init'
-require './dsl_builder'
-require './db'
-require './app'
+require './lib/init'
+require './lib/dsl_builder'
+require './lib/db'
+require './lib/app'
 
 run WebViewer

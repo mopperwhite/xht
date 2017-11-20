@@ -10,12 +10,13 @@ class DoujinshiMeta
   end
 
   def add_title(title, lang = nil)
-    DoujinshiTitle.create(
+    t = DoujinshiTitle.new(
       doujinshi_meta_id: id,
       title: title,
       has_lang: ! lang.nil?,
       lang: lang
     )
+    t.save 
   end
 
   def title(lang = nil)

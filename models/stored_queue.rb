@@ -4,7 +4,7 @@ class StoredQueue
   include DataMapper::Resource
   property :id,         Serial
   property :type,       Enum[:index_page, :image_page, :image]
-  property :url,        String
+  property :url,        String, length: 0..400
   property :finished,   Boolean, default: false
 
   belongs_to :download_task
@@ -23,16 +23,26 @@ class DownloadTaskQueue
     @task = task
   end
   def push(url)
-    StoredQueue.create(
+    q = StoredQueue.new(
       download_task_id: @task.id,
       type:   @type,
       url:    url
     )
+    q.save 
+  end
+  def top()
+    item = StoredQueue.first(
+      download_task_id: @task.id,
+      type:   @type,
+      finished: false
+    )
+    item.url
   end
   def pop()
-    item = first(
+    item = StoredQueue.first(
       download_task_id: @task.id,
-      type:   @type
+      type:   @type,
+      finished: false
     )
     url = item.url
     item.finished = true
@@ -40,9 +50,10 @@ class DownloadTaskQueue
     url
   end
   def empty?
-    first(
+    StoredQueue.count(
       download_task_id: @task.id,
-      type:   @type
+      type:   @type,
+      finished: false
     ) == 0
   end
 end

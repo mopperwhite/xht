@@ -1,0 +1,44 @@
+[
+{
+    "domain": ".e-hentai.org",
+    "expirationDate": 1542706799.064266,
+    "hostOnly": false,
+    "httpOnly": true,
+    "name": "__cfduid",
+    "path": "/",
+    "sameSite": "no_restriction",
+    "secure": false,
+    "session": false,
+    "storeId": "1",
+    "value": "dd74cc6825b910051ed65a369fc1e13521511170798",
+    "id": 1
+},
+{
+    "domain": ".e-hentai.org",
+    "expirationDate": 1542706810.354949,
+    "hostOnly": false,
+    "httpOnly": false,
+    "name": "uconfig",
+    "path": "/",
+    "sameSite": "no_restriction",
+    "secure": false,
+    "session": false,
+    "storeId": "1",
+    "value": "dm_t",
+    "id": 2
+},
+{
+    "domain": "e-hentai.org",
+    "expirationDate": 1542706817.122846,
+    "hostOnly": true,
+    "httpOnly": false,
+    "name": "nw",
+    "path": "/",
+    "sameSite": "no_restriction",
+    "secure": false,
+    "session": false,
+    "storeId": "1",
+    "value": "1",
+    "id": 3
+}
+]

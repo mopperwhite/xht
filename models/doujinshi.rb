@@ -3,15 +3,15 @@
 class Doujinshi
   include DataMapper::Resource
   property  :id,   Serial
-  property  :url,  String
-  property  :dir,  String     
+  property  :url,  String, length: 0..400
+  property  :dir,  String, length: 0..400
 
   has 1, :doujinshi_meta
   has 1, :download_task
   has n, :doujinshi_image
 
   def create_meta(meta)
-    dm = DoujinshiMeta.from_struct(meta)
+    dm = DoujinshiMeta.from_struct(meta, self)
     dm.doujinshi_id = id
     dm.save
     download_task.status = :initialized
@@ -29,6 +29,16 @@ class Doujinshi
     doujinshi_meta.to_struct
   end
 
+  def isolate_meta()
+    doujinshi_meta
+      .to_struct
+      .to_h
+      .merge(
+        :images => DoujinshiImages.all(doujinshi_id: id)
+                                  .map(&:filename)
+      )
+  end
+
   def images
     DoujinshiImage.all(
       doujinshi_id: id
@@ -44,5 +54,20 @@ class Doujinshi
       last_image: 0,
       status: :new
     )
+  end
+
+  def Doujinshi.add(url, tag = nil)
+    d = create(url: url)
+    d.download_task.tag = tag
+    d.download_task.save
+    d
+  end
+
+  def Doujinshi.has_task?
+    count(download_task.status.not => :finished) != 0
+  end
+
+  def Doujinshi.top_task
+    first(download_task.status.not => :finished)
   end
 end
