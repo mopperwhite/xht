@@ -1,15 +1,16 @@
 {
   "name": "xhentai-frontend",
-  "description": "A Vue.js project",
+  "description": "Frontend of XHentai",
   "version": "1.0.0",
-  "author": "",
+  "author": "MopperWhite <mopperwhite@gmail.com>",
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
+    "dev": "node ./node_modules/concurrently/src/main.js 'cross-env NODE_ENV=development webpack-dev-server --open --hot' 'cd .. && rackup -p 9292'",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
+    "concurrently": "^3.5.0",
     "vue": "^2.4.4"
   },
   "browserslist": [
@@ -25,8 +26,6 @@
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.7",
     "file-loader": "^1.1.4",
-    "node-sass": "^4.5.3",
-    "sass-loader": "^6.0.6",
     "vue-loader": "^13.0.5",
     "vue-template-compiler": "^2.4.4",
     "webpack": "^3.6.0",

@@ -13,20 +13,90 @@ class WebViewer < Sinatra::Base
     send_file File.join('frontend', 'index.html')
   end
 
-  get '/query' do
+  get '/io' do
   end
 
-  get '/info/:id' do
+  get '/api/query' do
+    query = {
+      :unique => true
+    }
+    
+    and_query = [] 
+    
+    if params[:range]
+      from, to = params[:range].split('-').map(&:to_i)
+      query.merge(offset: from, limit: to-from)
+    end
+    
+    if params[:title]
+      t_query = params[:tags].split.map do |t|
+        Doujinshi.all(Doujinshi.doujinshi_title.title.like => "%#{t}%")
+      end
+      and_query.push(t_query.reduce(&:&))
+    end
+    
+    if params[:character]
+      query[Doujinshi.doujinshi_character.name] = "%#{params[:character]}%"
+    end
+    
+    if params[:characters]
+      c_query = params[:characters].split('|').map do |t|
+        Doujinshi.all(Doujinshi.doujinshi_character.name => t)
+      end
+      and_query.push(t_query.reduce(&:&))
+    end
+    
+    if params[:tags]
+      or_query = params[:tags].split('|').map do |t|
+        Doujinshi.all(Doujinshi.doujinshi_tag.tag => t)
+      end
+      and_query.push(or_query.reduce(&:+))
+    end
+    
+    [:author, :description, :group, :language, :category].each do |t|
+      next if params[t].nil?
+      query[t.like] = "%#{params[t]}%"
+    end
+
+    ds = and_query.empty? ?
+      Doujinshi.all(query) :
+      Doujinshi.all(query) & and_query.reduce(&:+)
+    ds
+      .map(&:doujinshi_meta)
+      .map(&:to_struct)
+      .map(&:to_h)
+      .to_json
   end
 
-  get '/image' do
+  get '/api/info/:id' do
+    doujinshi = Doujinshi.first(id: params[:id].to_i)
+    halt 401 if doujinshi.nil?
+    doujinshi.doujinshi_meta.to_struct.to_h.to_json
+  end
+
+  get '/api/images/:id' do
+    doujinshi = Doujinshi.first(id: params[:id].to_i)
+    halt 401 if doujinshi.nil?
+    doujinshi.images.to_json
+  end
+
+  get '/api/keyvalues/get' do
+    KeyValue.to_h.to_json
+  end
+
+  post '/api/keyvalues/set' do
+    KeyValue.merge(params)
+    true
+  end
+
+  get '/api/image' do
     content_type 'image/png'
     id = params[:id].to_i
     filename = params[:filename]
     resize = params.has_key? :resize
 
     doujinshi = Doujinshi.first(id: id)
-    halt 404 unless doujinshi &&
+    halt 401 unless doujinshi &&
                     DoujinshiImage.count(
                       doujinshi_id: doujinshi.id, 
                       filename:     filename

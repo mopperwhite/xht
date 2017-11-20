@@ -16,41 +16,11 @@ module.exports = {
           'vue-style-loader',
           'css-loader'
         ],
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          'sass-loader'
-        ],
-      },
-      {
-        test: /\.sass$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          'sass-loader?indentedSyntax'
-        ],
-      },
-      {
+      },      {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
           loaders: {
-            // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
-            // the "scss" and "sass" values for the lang attribute to the right configs here.
-            // other preprocessors should work out of the box, no loader config like this necessary.
-            'scss': [
-              'vue-style-loader',
-              'css-loader',
-              'sass-loader'
-            ],
-            'sass': [
-              'vue-style-loader',
-              'css-loader',
-              'sass-loader?indentedSyntax'
-            ]
           }
           // other vue-loader options go here
         }
@@ -78,7 +48,19 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     noInfo: true,
-    overlay: true
+    overlay: true,
+    proxy: {
+      '/api': {
+        target: 'http://127.0.0.1:9292/',
+        // pathRewrite: {'^/api' : '/campaign_huggies/t3store_freeuse/admin'},
+        changeOrigin: true
+      },
+      '/io': {
+        target: 'ws://127.0.0.1:9292/',
+        changeOrigin: true,
+        ws: true
+      }
+    }
   },
   performance: {
     hints: false

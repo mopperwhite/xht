@@ -26,5 +26,18 @@ class KeyValue
     def keys()
       all.map(&:k)
     end
+
+    def to_h
+      all(k: key, v: value).map do |item|
+        [item.k, item.v]
+      end.to_h.merge(@@_default)
+    end
+
+    def merge(obj)
+      obj.each_pair do |k, v|
+        next if count(k: k) == 0 && ! @@_default.has_key?(k)
+        self[k]= v
+      end
+    end
   end
 end

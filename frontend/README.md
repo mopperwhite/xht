@@ -1,6 +1,6 @@
 # xhentai-frontend
 
-> A Vue.js project
+> Frontend of XHentai
 
 ## Build Setup
 
