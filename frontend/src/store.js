@@ -14,6 +14,10 @@ const store = new Vuex.Store({
     doujinshi_info: null
   },
   mutations: {
+    clear_doujinshi_info(state){
+      state.doujinshi_info = null
+      state.image_list = []
+    },
     move_selected_index(state, next_index){
       if(next_index < 0){
         next_index = 0;

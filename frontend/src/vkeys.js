@@ -7,4 +7,5 @@ export default {
   SWITCH: 6,
   QUIT:   7,
   SELECT: 8,
+  REFRESH: 9,
 }

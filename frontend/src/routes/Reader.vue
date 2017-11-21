@@ -111,11 +111,16 @@ export default {
     select_image(index){
       this.set_index(index)
       this.selecting = false
+    },
+    move_distance(){
+      return parseInt(window.innerHeight * 0.3)
+    },
+    load(){
+      this.$store.dispatch('get_doujinshi_info', this.$route.params.id)
     }
   },
-  beforeMount(){
-    this.$store.dispatch('get_image_list', this.$route.params.id)
-    this.$store.dispatch('get_doujinshi_info', this.$route.params.id)
+  mounted(){
+    this.load()
   },
   created(){
     bus.$off('key')
@@ -134,10 +139,11 @@ export default {
             break;
           case VKeys.LEFT:    this.set_index(this.image_index-1); break;
           case VKeys.RIGHT:   this.set_index(this.image_index+1); break;
-          case VKeys.UP:      this.start_scroll(-MAX_SPEED); break;
-          case VKeys.DOWN:    this.start_scroll(+MAX_SPEED); break;
+          case VKeys.UP:      this.start_scroll(-this.move_distance()); break;
+          case VKeys.DOWN:    this.start_scroll(+this.move_distance()); break;
           case VKeys.SELECT:  this.open_select_list(); break;
           case VKeys.SWITCH:  this.switch_mode(); break;
+          case VKeys.REFRESH:  this.load(); break;
         }
       }
     })

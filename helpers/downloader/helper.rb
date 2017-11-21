@@ -9,11 +9,11 @@ module Downloader
       /\(.+?\)/,
       /\[.+?\]/
     ].each do |pat|
-      break if str.length <= len
+      break if str.bytesize <= len
       str.gsub!(pat, '')
     end
 
-    while str.length > len
+    while str.bytesize > len
       str.slice!(0, str.length / 2)
     end
     str

@@ -1,7 +1,6 @@
 <template lang="jade">
 #app
-  keep-alive
-    router-view
+  router-view
 </template>
 
 <script>

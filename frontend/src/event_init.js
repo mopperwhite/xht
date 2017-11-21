@@ -10,8 +10,9 @@ const key2evt = [
   [ VKeys.RIGHT,  ['d', 'right'] ],
   [ VKeys.ENTER,  ['enter', 'e'] ],
   [ VKeys.SWITCH, ['shift', 'z'] ],
-  [ VKeys.QUIT,   ['esc', 'q'] ],
-  [ VKeys.SELECT, ['f', 'l'] ]
+  [ VKeys.QUIT,   ['esc', 'q', 'backspace'] ],
+  [ VKeys.SELECT, ['f', 'l'] ],
+  [ VKeys.REFRESH, ['r'] ]
 ]
 
 for(let [e, ks] of key2evt){

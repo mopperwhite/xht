@@ -2,7 +2,7 @@
 .row(ref="row")
   template(v-for="(m, index) in $store.state.doujinshi_list")
     .doujinshi-card.col.s4.m3(
-        @click="read(m.id)",
+        @click="read(index)",
         :class='{"selected-card": index == $store.state.selected_index}',
         :title="get_title(m)",
         ref="card")
@@ -29,11 +29,13 @@ export default {
     get_title(meta){
       return shorten_title(get_title(meta))
     },
-    read(id){
+    read(i){
+      let id = this.$store.state.doujinshi_list[i].id
+      console.log(i)
+      this.$store.commit('move_selected_index', i)
       this.$router.push(`/read/${id}`)
     },
     move_to_view_r(next_index){
-      console.log(this.$store.state.selected_index + next_index)
       this.$store.commit('move_selected_index', this.$store.state.selected_index + next_index)
       let index = this.$store.state.selected_index
       if(this.$refs.card && this.$refs.card.length){
@@ -57,10 +59,13 @@ export default {
         case VKeys.DOWN : this.move_to_view_r(+ this.row_wrap); break;
         case VKeys.LEFT : this.move_to_view_r(- this.col_wrap); break;
         case VKeys.RIGHT: this.move_to_view_r(+ this.col_wrap); break;
-        case VKeys.ENTER: this.read(
-          this.$store.state.doujinshi_list[
-            this.$store.state.selected_index
-          ].id); break;
+        case VKeys.ENTER:
+        console.log('e', this.$store.state.selected_index) 
+          this.read(
+            this.$store.state.doujinshi_list[
+              this.$store.state.selected_index -1 // ?????
+            ].id); 
+          break;
       }
       
     })

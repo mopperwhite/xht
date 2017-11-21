@@ -19,14 +19,12 @@ function get_doujinshi_list({commit}, url){
   })
 }
 
-function get_image_list({commit}, id){
+function get_doujinshi_info({commit}, id){
+  commit('clear_doujinshi_info')
   axios.get(`/api/images/${id}`)
   .then(list => {
     commit('set_image_list', list)
   })
-}
-
-function get_doujinshi_info({commit}, id){
   axios.get(`/api/info/${id}`)
   .then(info => {
     commit('set_doujinshi_info', info)
@@ -36,5 +34,4 @@ function get_doujinshi_info({commit}, id){
 export default {
   get_doujinshi_list,
   get_doujinshi_info,
-  get_image_list
 }
