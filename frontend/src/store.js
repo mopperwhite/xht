@@ -11,12 +11,16 @@ const store = new Vuex.Store({
     selected_index: 0,
     doujinshi_list: [],
     image_list: [],
-    doujinshi_info: null
+    doujinshi_info: null,
+    remote_control: false,
   },
   mutations: {
     clear_doujinshi_info(state){
       state.doujinshi_info = null
       state.image_list = []
+    },
+    set_remote_control(state, b){
+      state.remote_control = !!b
     },
     move_selected_index(state, next_index){
       if(next_index < 0){

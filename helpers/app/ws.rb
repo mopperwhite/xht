@@ -3,21 +3,22 @@
 require './helpers/app/ws_room'
 
 class WebViewer
-  @@ws_room = WSRoom.new
+  @@ws_event = WSEvent.new
+  @@ws_room = WSRoom.new(@@ws_event)
 
   get '/io' do
     if request.websocket?
       request.websocket do |ws|
         ws.onopen do
-          @@ws_room.on_open(ws)
+          @@ws_event.on_open(ws)
         end
         ws.onmessage do |msg|
-          EM.next_tick do
-            @@ws_room.on_message(ws, msg)
-          end
+          # EM.next_tick do
+            @@ws_event.on_message(ws, msg)
+          # end
         end
         ws.onclose do
-          @@ws_room.on_close(ws)
+          @@ws_event.on_close(ws)
         end
       end
     else

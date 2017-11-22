@@ -1,4 +1,4 @@
-const socket = new WebSocket('/io')
+const socket = new WebSocket(`ws://${location.host}/io`)
 const event_map = {}
 
 socket.onopen = () => {
@@ -6,8 +6,8 @@ socket.onopen = () => {
 }
 
 socket.onmessage = (msg) => {
-  console.log(msg)
-  let {event, payload} = msg
+  // console.log(msg)
+  let {event, payload} = JSON.parse(msg.data)
   if(!event_map[event]) return;
   for(let f of event_map[event]){
     f(payload)
@@ -15,7 +15,7 @@ socket.onmessage = (msg) => {
 }
 
 socket.onerror = (err) => {
-  console.warn("WS ERROR:", err)
+  console.warn(`WS ERROR: ${err}`)
 }
 
 socket.onclose = () => {
@@ -26,11 +26,11 @@ socket.onclose = () => {
 export default {
   socket,
   emit(event, payload){
-    if(!event_map[evnet]) return;
-    socket.send({
+    // if(!event_map[event]) return;
+    socket.send(JSON.stringify({
       event,
       payload
-    })
+    }))
   },
   on(event, func){
     if(!event_map[event]) event_map[event] = []

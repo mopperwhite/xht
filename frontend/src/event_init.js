@@ -1,7 +1,8 @@
 import keyboardJS from 'keyboardjs'
 import VKeys from './vkeys'
 import bus from './bus'
-
+import io from './io'
+import store from './store'
 
 const key2evt = [
   [ VKeys.UP,     ['w', 'up'] ],
@@ -18,7 +19,7 @@ const key2evt = [
 for(let [e, ks] of key2evt){
   for(let k of ks){
     keyboardJS.bind(k, event => {
-      bus.$emit('key', {
+      bus.$emit('pkey', {
         key: e,
         event
       })
@@ -26,3 +27,25 @@ for(let [e, ks] of key2evt){
     })
   }
 }
+
+io.on('pong', payload => {
+  console.log('pong')
+})
+
+io.on('key', key => {
+  console.log(`remote: ${key}`)
+  if(store.state.remote_control)
+    bus.$emit('rkey', {
+      key
+    })
+})
+
+bus.$on('pkey', ({key, event}) => {
+  bus.$emit('key', {key, event})
+  if(store.state.remote_control)
+    io.emit('key', key)
+})
+
+bus.$on('rkey', ({key}) => {
+  bus.$emit('key', {key})
+})

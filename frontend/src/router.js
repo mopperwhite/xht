@@ -5,13 +5,15 @@ import Search   from './routes/Search.vue'
 import Settings from './routes/Settings.vue'
 import Download from './routes/Download.vue'
 import Reader   from './routes/Reader.vue'
+import Remote   from './routes/Remote.vue'
 
 const routes = [
   { path: '/', component: Home },
   { path: '/search', component: Search },
   { path: '/settings', component: Settings },
   { path: '/download', component: Download },
-  { path: '/read/:id', component: Reader }
+  { path: '/read/:id', component: Reader },
+  { path: '/remote', component: Remote }
 ]
 
 export default new VueRouter({
