@@ -9,6 +9,10 @@ A local doujinshi reader.
 
 1. Clone this project.
 
+```bash
+git clone https://github.com/mopperwhite/xht.git xhentai
+```
+
 2. Install dependencies.
 
 ```bash
