@@ -20,7 +20,9 @@ class KeyValue
       val
     end
     def []=(key, value)
-      all(k: key).update(v: value.to_yaml)
+      item = first_or_create(k: key.to_s)
+      item.v = value.to_yaml
+      item.save
       value
     end
     def keys()

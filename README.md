@@ -1,39 +1,48 @@
+
 # XHentai
 
-A simple downloading and reading toolkit for local users.
+A local doujinshi reader.
 
-Based on Ruby, XHentai should include two main modules.
+# Usage
 
-## Downloader
+## Start Server
 
-A downloader based on Machanize with a plugin system, which allows users and developers create their own downloader for different websites.
+1. Clone this project.
 
-The plugins should be chosen automatically with the hostname or pattern of URLs.
+2. Install dependencies.
 
-On the other hand, the downloader should save the meta-information and progress for each task, so that they could be recovered if they were interrupted accidently.
+```bash
+bundle install
+```
 
-The progress should be stored in the database. However, the downloaded files should be standalone and NOT relay on any database. In the meta-information file, the order of images should be offered, and other information like tags and authors should also be stored.
+3. Start web server.
 
-TODO:
+```bash
+rackup -p 8000
+```
 
-* Downloader Server & Client
-* Progress management
-* Database
-* Recover
+4. Read doujinshi at [http://localhost:8000/](http://127.0.0.1:8000/)
 
-## Viewer
 
-A simple server based on Sinatra supports viewing, searching, sorting, multi-user basic access authentication and task submission.
+## Set authorization
 
-### Frontend
+```bash
+rake seed
+```
 
-The frontend of viewer should be a Single Page Application based on React or Vue, including at least a gallery page, a viewer page and a searching page.
+## Keyboard Shortcut
 
-TODO:
+![](docs/images/keyboard.svg)
 
-* Night Mode
-* Friendly UI for touch screens
-* Switching pages with keyboard and single hand(for both left and right hand)
+## Encrypted Datastream ?
 
-### Backend
+Please use HTTPS.
+
+[Configuring HTTPS servers(Nginx)](http://nginx.org/en/docs/http/configuring_https_servers.html)
+
+## Supported Websites
+
+* e-hentai
+* nhentai
+
 

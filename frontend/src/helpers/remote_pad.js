@@ -1,10 +1,9 @@
 import VKeys from '../vkeys'
 
 const REMOTE_PAD = [
-  "N..",
   "XUG",
   "LAR",
-  ".D.",
+  "ZDN",
 ]
 
 const KEY_MAP = {
@@ -15,7 +14,8 @@ const KEY_MAP = {
   A: VKeys.ENTER,
   X: VKeys.QUIT,
   G: VKeys.SELECT,
-  N: VKeys.RELOAD
+  N: VKeys.RELOAD,
+  Z: VKeys.SWITCH
 }
 
 const ICON = {
@@ -25,8 +25,9 @@ const ICON = {
   [VKeys.RIGHT]:  'keyboard_arrow_right',
   [VKeys.ENTER]:  'check',
   [VKeys.QUIT]:   'close',
-  [VKeys.SELECT]: 'list',
-  [VKeys.RELOAD]: 'refresh'  
+  [VKeys.SELECT]: 'view_list',
+  [VKeys.RELOAD]: 'refresh',
+  [VKeys.SWITCH]: 'zoom_out',
 }
 
 const CLASS = {
@@ -37,11 +38,12 @@ const CLASS = {
   [VKeys.ENTER]:  '',
   [VKeys.QUIT]:   '',
   [VKeys.SELECT]: '',
-  [VKeys.RELOAD]: ''    
+  [VKeys.RELOAD]: '',
+  [VKeys.SWITCH]: '',
 }
 
 const WIDTH  = 3
-const HEIGHT = 4
+const HEIGHT = 3
 
 export default {
   WIDTH,

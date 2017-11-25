@@ -1,7 +1,12 @@
 #!/usr/bin/env ruby
 #encoding=utf-8
+require "sinatra/reloader"
 
 class WebViewer < Sinatra::Base
+
+  configure :development do
+    register Sinatra::Reloader
+  end
 
   set :public_folder, 'public'
 

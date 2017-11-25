@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 #encoding=utf-8
-require './init'
-require './db'
+require './lib/init'
+require './lib/db'
 
 task :default do
   puts "Use `rake -D' to see all commands."

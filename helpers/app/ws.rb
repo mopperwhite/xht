@@ -2,11 +2,16 @@
 #encoding=utf-8
 require './helpers/app/ws_room'
 
+require 'json'
+
 class WebViewer
   @@ws_event = WSEvent.new
   @@ws_room = WSRoom.new(@@ws_event)
 
   get '/io' do
+    # puts "FUCK"
+    # puts JSON.pretty_generate(request.env)
+    # ??? 
     if request.websocket?
       request.websocket do |ws|
         ws.onopen do
