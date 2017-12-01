@@ -1,23 +1,25 @@
 <template lang="jade">
-.doujinshi-info
+.doujinshi-info.container
   template(v-for="(t, i) in titles")
       template(v-if="i==0")
-        h1.col.s12 {{t}}
+        .row
+          h1.col.s12 {{t}}
       template(v-else)
-        h2.col.s12 {{t}}
-  table
-    tr
-      td Author:
-      td 
-        span.chip {{meta.author}}
-    tr
-      td Language:
-      td {{meta.language}}
-    tr
-      td Tags:
-      td
-        span.chip(v-for="t in meta.tags")
-          | {{t}}
+        .row
+          h2.col.s12 {{t}}
+  .row
+    div.doujinshi-info-tags.col.s12
+      .row
+        .col.s2 Author: 
+        .col.s10 {{meta.author}}
+      .row 
+        .col.s2 Language: 
+        .col.s10 {{meta.language}}
+      .row 
+        .col.s2 Tags:
+        .col.s10
+          .chip(v-for="t in meta.tags")
+            | {{t}}
 
 </template>
 

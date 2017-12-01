@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35"
-     inkscape:cx="552.17017"
-     inkscape:cy="556.37553"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="772.07702"
+     inkscape:cy="75.627344"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -61,7 +61,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -889,6 +889,22 @@
        height="51.346176"
        x="404.60526"
        y="276.03308" />
+    <rect
+       style="fill:#008080"
+       id="rect3671"
+       width="50"
+       height="49.999992"
+       x="404.62894"
+       y="417.55038" />
+    <rect
+       style="fill:#008080"
+       id="rect3671-3"
+       width="50"
+       height="58.571423"
+       x="901.89429"
+       y="414.65732"
+       inkscape:transform-center-x="32.857143"
+       inkscape:transform-center-y="30.122438" />
     <g
        transform="matrix(1.7801315,0,0,1.7801315,4.9917754,14.94)"
        style="font-weight:700;font-family:sans-serif"
@@ -1752,5 +1768,28 @@
            x="107.53014"
            y="818.59845"
            id="tspan6765">REFRESH</tspan></tspan></text>
+    <rect
+       style="fill:#008080"
+       id="rect3671-3-6"
+       width="60.101524"
+       height="56.071423"
+       x="801.53387"
+       y="773.23987"
+       inkscape:transform-center-x="39.495289"
+       inkscape:transform-center-y="28.836724" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="887.10046"
+       y="818.20209"
+       id="text6755-7"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="887.10046"
+         y="818.20209"
+         id="tspan6757-5">ROTATE<tspan
+   x="887.10046"
+   y="818.20209"
+   id="tspan6759-3" /></tspan></text>
   </g>
 </svg>

@@ -1,0 +1,61 @@
+@import "./reader-btn.scss";
+@import "./reader-select.scss";
+
+.doujinshi-info-tags{
+  @extend .blue-grey-text.text-lighten-4 ;
+  font-size: 1.5rem;
+  color: red;
+}
+
+.doujinshi-info{
+  @extend .blue-grey-text.text-lighten-4 ;
+  font-size: 1.5rem;
+  h1 {
+    font-size: 2.5rem;
+    margin: 0;
+  }
+  h2 {
+    font-size: 2rem;
+    margin: 0;
+  }
+}
+
+@mixin doujinshi-image-size($class-name, $width-name, $height-name){
+  .reader-image.#{$class-name}{
+    &.img-full-size{
+      max-#{$width-name}: 100vw;
+      #{$width-name}: 100%;
+    }
+    &.img-mid-size{
+      max-#{$width-name}: 100%;
+      width: 80%;
+    }
+    &.img-whole-size{
+      max-#{$width-name}: 100vw;
+      max-#{$height-name}: 100vh;
+    }
+    &.img-max-size{
+      max-#{$width-name}: 100%;
+    }
+  }
+}
+
+.doujinshi-image-container{
+  @extend .center ;
+  @each $ang in 0, 90, 180, 270 {
+    $class-name: rotate-#{$ang}deg;
+    @if $ang % 180 == 0{
+      @include doujinshi-image-size($class-name, "width", "height");
+    }@else{
+      @include doujinshi-image-size($class-name, "height", "width");
+    }
+    .reader-image.#{$class-name}{
+      $real_ang: +$ang;
+      transform:      rotate(#{$real_ang}deg);
+      -ms-transform:  rotate(#{$real_ang}deg);		/* IE 9 */
+      -webkit-transform:  rotate(#{$real_ang}deg);	/* Safari and Chrome */
+      -o-transform:   rotate(#{$real_ang}deg);		/* Opera */
+      -moz-transform: rotate(#{$real_ang}deg);		/* Firefox */
+    }
+  }
+}

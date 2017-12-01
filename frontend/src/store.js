@@ -3,8 +3,8 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 import api_actions from './actions/api'
+import io_actions from './actions/io'
 
-console.log(api_actions)
 
 const store = new Vuex.Store({
   state: {
@@ -12,15 +12,15 @@ const store = new Vuex.Store({
     doujinshi_list: [],
     image_list: [],
     doujinshi_info: null,
-    remote_control: false,
+    pair_code: null
   },
   mutations: {
     clear_doujinshi_info(state){
       state.doujinshi_info = null
       state.image_list = []
     },
-    set_remote_control(state, b){
-      state.remote_control = !!b
+    set_pair_code(state, code){
+      state.pair_code = code
     },
     move_selected_index(state, next_index){
       if(next_index < 0){
@@ -42,7 +42,8 @@ const store = new Vuex.Store({
     }
   },
   actions: {
-    ...api_actions
+    ...api_actions,
+    ...io_actions
   }
 })
 

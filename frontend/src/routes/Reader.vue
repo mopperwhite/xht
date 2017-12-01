@@ -4,6 +4,13 @@ div
     i.material-icons.large close
   button.d-act-btn.act-select(@click="selecting = true")
     i.material-icons.large list
+  button.d-act-btn.act-zoom(@click="switch_mode")
+    i.material-icons.large zoom_out
+  button.d-act-btn.act-rotate(
+    @click="rotate",
+    @dblclick="hold_rotation = !hold_rotation; rotate(); rotate();",
+    :class="{'act-hold': hold_rotation}")
+    i.material-icons.large rotate_right
   button.d-navi-btn.navi-priv(@click="set_index(image_index -1)")
     i.material-icons.large keyboard_arrow_left
   button.d-navi-btn.navi-next(@click="set_index(image_index +1)")
@@ -17,10 +24,10 @@ div
     :image_list="$store.state.image_list")
   .container
     .row(v-if="$store.state.doujinshi_info")
-      doujinshi-info(:meta="$store.state.doujinshi_info")
+      doujinshi-info.col.s12(:meta="$store.state.doujinshi_info")
     .row
       .col.s12.doujinshi-image-container
-        img(
+        img.reader-image(
           @click="set_index(image_index +1)",
           ref="image",
           :class='get_read_mode()',
@@ -46,6 +53,10 @@ const MAX_SPEED = 40
 const SPEED_STEP= 2
 const SPEED_EXPIRE = 100
 
+const btn_stat = {
+  rotate_hold: 0,
+}
+
 export default {
   components: {
     ImageList,
@@ -58,7 +69,9 @@ export default {
       scroll_speed: 0,
       speed_update_time: 0,
       selecting: false,
-      selected_index: 0
+      selected_index: 0,
+      rotate_ang: 0,
+      hold_rotation: false
     }
   },
   methods: {
@@ -86,12 +99,15 @@ export default {
       }
     },
     get_read_mode(){
-      return `img-${READ_MODE[this.read_mode]}-size`
+      return [`rotate-${this.rotate_ang}deg`, `img-${READ_MODE[this.read_mode]}-size`]
     },
     set_index(index){
       if(index < 0) index = 0
       if(index >= this.length()) index = this.length()-1
       this.image_index = index
+      if(!this.hold_rotation){
+        this.rotate_ang = 0
+      }
       if(this.$refs.image){
         this.$refs.image.scrollIntoView()
       }
@@ -117,12 +133,17 @@ export default {
     },
     load(){
       this.$store.dispatch('get_doujinshi_info', this.$route.params.id)
+    },
+    rotate(){
+      this.rotate_ang += 90
+      this.rotate_ang %= 360
     }
   },
   mounted(){
     this.load()
   },
   created(){
+    this.image_index = this.$route.params.page || 0
     bus.$off('key')
     bus.$on('key', ({key, event}) => {
       if(this.selecting){
@@ -144,6 +165,9 @@ export default {
           case VKeys.SELECT:  this.open_select_list(); break;
           case VKeys.SWITCH:  this.switch_mode(); break;
           case VKeys.REFRESH:  this.load(); break;
+          case VKeys.ROTATE:  
+            this.rotate()
+            break;
         }
       }
     })

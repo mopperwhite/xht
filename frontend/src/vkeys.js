@@ -8,4 +8,5 @@ export default {
   QUIT:   7,
   SELECT: 8,
   REFRESH: 9,
+  ROTATE: 10,
 }

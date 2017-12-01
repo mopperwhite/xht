@@ -11,3 +11,7 @@ require 'bundler/setup'
 Bundler.require(:default)
 
 $logger = Logger.new($stderr)
+$logger.datetime_format = "%Y-%m-%d %H:%M:%S"
+$logger.formatter = proc do |severity, datetime, progname, msg|
+  "- #{datetime} #{severity}: #{msg}\n"
+end

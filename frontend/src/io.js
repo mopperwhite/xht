@@ -1,17 +1,21 @@
 const socket = new WebSocket(`ws://${location.host}/io`)
 const event_map = {}
 
-socket.onopen = () => {
+function emit_local_event(event, payload = null){
+  if(!event_map[event]) return;
+  for(let f of event_map[event]){
+    f(payload)
+  }
+}
 
+socket.onopen = () => {
+  emit_local_event('connected')
 }
 
 socket.onmessage = (msg) => {
   // console.log(msg)
   let {event, payload} = JSON.parse(msg.data)
-  if(!event_map[event]) return;
-  for(let f of event_map[event]){
-    f(payload)
-  }
+  emit_local_event(event, payload)
 }
 
 socket.onerror = (err) => {
@@ -25,7 +29,7 @@ socket.onclose = () => {
 
 export default {
   socket,
-  emit(event, payload){
+  emit(event, payload = null){
     // if(!event_map[event]) return;
     socket.send(JSON.stringify({
       event,
@@ -42,5 +46,8 @@ export default {
     if(i==-1) return false;
     delete event_map[event][i]
     return true
+  },
+  close(){
+    socket.close()
   }
 }

@@ -24,6 +24,8 @@ html, body{
   overflow-y: scroll;
 }
 
+@import "./scss/reader.scss";
+
 .doujinshi-card.selected-card{
   @extend .blue-grey.darken-2 ; 
 }
@@ -49,123 +51,20 @@ html, body{
   }
 }
 
-.doujinshi-image-container{
-  @extend .center ;
-  img.img-full-size{
-    max-width: 100%;
-    width: 100%;
-  }
-  img.img-mid-size{
-    max-width: 100%;
-    width: 80%;
-  }
-  img.img-whole-size{
-    max-width: 100vw;
-    max-height: 100vh;
-  }
-  img.img-max-size{
-    max-width: 100%;
-  }
-}
-
-.d-side-btn{
-  @extend .center ;
-  // @extend .blue-grey.darken-3 ;
-  @extend .black ;
-  @extend .blue-grey-text.text-lighten-5 ;
-  border: 0;
-  // @extend .btn ;
-  width: 30rem;
-  max-width: 10%;
-  opacity: 0.5;
-  margin: 0;
-  position: fixed;
-}
-
-.d-navi-btn{
-  @extend .d-side-btn ;
-  bottom: 0;
-  height: 80%;
-}
-
-.d-navi-btn.navi-priv{
-  left: 0;
-}
-
-.d-navi-btn.navi-next{
-  right: 0;
-}
-
-.d-act-btn{
-  @extend .d-side-btn ;
-  top: 0;
-  height: 20%;
-}
-
-.d-act-btn.act-quit{
-  left: 0;
-}
-
-.d-act-btn.act-select{
-  right: 0;
-}
-
-.d-select-bar{
-  @extend .black ;
-  @extend .center ;
-  position: fixed;
-  height: calc(200px + 4rem);
-  bottom: 0;
-  right: 0;
-  top: 0;
-  margin: 0;
-  height: 100%;
-  opacity: 0.9; 
-  overflow-x: hidden;
-  overflow-y: scroll;
-  z-index: 100;
-  div{
-    padding: 2rem;
-    img {
-
-    }
-  }
-  div.selected{
-    @extend .teal.darken-2 ;
-    img {
-
-    }
-  }
-}
-.d-select-bar-mask{
-  @extend .black ;
-  @extend .valign-wrapper ;
-  @extend .blue-grey-text.text-lighten-5 ;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  right: 0;
-  margin: 0;
-  opacity: 0.6; 
-  position: fixed;
-  z-index: 99;
-  font-size: 3rem;
-  p {
-    text-align: center;
-  }
-}
 
 input {
   @extend .blue-grey-text.text-lighten-5 ;
 }
 
-.doujinshi-info{
-  @extend .blue-grey-text.text-lighten-4 ;
-  font-size: 1.5rem;
-}
 
 .remote-ctrl-btn{
   @extend .blue-grey-text.text-lighten-5 ;
   text-align: center;
 
 }
+
+.message-toast{
+  font-size: 2rem;
+}
+
+

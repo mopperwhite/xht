@@ -1,0 +1,65 @@
+.d-side-btn{
+  @extend .center ;
+  // @extend .blue-grey.darken-3 ;
+  @extend .black ;
+  @extend .blue-grey-text.text-lighten-5 ;
+  border: 0;
+  // @extend .btn ;
+  width: 30rem;
+  max-width: 10%;
+  opacity: 0.5;
+  margin: 0;
+  position: fixed;
+  z-index: 100;
+}
+
+.d-navi-btn{
+  @extend .d-side-btn ;
+  bottom: 0;
+  height: 80%;
+}
+
+
+$d-act-left-height: 18%;
+$d-priv-btn-height: 100% - $d-act-left-height*3;
+
+.d-navi-btn.navi-priv{
+  left: 0;
+  height: $d-priv-btn-height;
+}
+
+.d-navi-btn.navi-next{
+  right: 0;
+}
+
+.d-act-btn{
+  @extend .d-side-btn ;
+  top: 0;
+  height: 20%;
+}
+
+@mixin d-act-left-btn($index){
+  left: 0;
+  height: $d-act-left-height;
+  top: #{$d-act-left-height * $index};
+}
+
+.d-act-btn.act-quit{
+  @include d-act-left-btn(0);
+}
+
+.d-act-btn.act-zoom{
+  @include d-act-left-btn(1);
+}
+
+.d-act-btn.act-rotate{
+  @include d-act-left-btn(2);
+}
+
+.d-act-btn.act-rotate.act-hold{
+  @extend .red-text.text-darken-4 ;
+}
+
+.d-act-btn.act-select{
+  right: 0;
+}

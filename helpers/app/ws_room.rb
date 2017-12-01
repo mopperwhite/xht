@@ -18,17 +18,22 @@ class WSEvent
       return
     end
     unless evt.has_key?('event') && evt.has_key?('payload')
-      $logger.error 'invalid structure'
+      $logger.error "invalid structure: #{msg}"
       return
     end
     $logger.debug "WS event: #{evt['event']} (#{ws})"
-    @procs[evt['event']].each do |pr|
-      pr.call(evt['payload'], ws)
+    emit_local_message(ws, evt['event'], evt['payload'])
+  end
+
+  def emit_local_message(ws, event, payload = nil)
+    @procs[event].each do |pr|
+      pr.call(payload, ws)
     end
   end
 
   def on_close(ws)
     $logger.debug "WS disconnected: #{ws}"
+    emit_local_message(ws, 'disconnected')
   end
 
   def on(event, &block)
@@ -72,13 +77,18 @@ class WSRoom
       $logger.debug "ping #{ws}"
       emit(ws, 'pong', nil)
     end
+
+    @event.on 'disconnected' do |_, ws|
+      puts "STILL GOOD"
+      leave_room(ws)
+    end
   end
 
-  def broadcast(ws, evt, msg)
+  def broadcast(ws, evt, msg, self_included = false)
     code = @ws_room_dict[ws]
     $logger.debug "broadcast `#{evt}' to #{@ws_rooms[code]&.length} users"
     @ws_rooms[code]&.each do |w|
-      next if w == ws
+      next if !self_included && w == ws
       emit(w, evt, msg)
     end
   end
@@ -90,14 +100,15 @@ class WSRoom
   def join_room(ws, code)
     @ws_room_dict[ws] = code
     @ws_rooms[code].push(ws)
-    emit(ws, 'join_room', nil)
+    emit(ws, 'message', nil)
+    broadcast(ws, 'message', "Room #{code}: Connected with #{@ws_rooms[code].length-1} Devices.", true)
   end
 
   def leave_room(ws)
     room = @ws_room_dict[ws]
-    @ws_rooms[room].each do |ws|
-      emit(ws, 'leave_room', nil)
-    end
+    return if room.nil?
+    emit(ws, 'message', "Disconnected from Room #{room}.")
+    broadcast(ws, 'message', "Disconnected from 1 Device.")
     @ws_rooms[room].delete(ws)
     @ws_room_dict.delete(ws)
   end

@@ -13,7 +13,8 @@ const key2evt = [
   [ VKeys.SWITCH, ['shift', 'z'] ],
   [ VKeys.QUIT,   ['esc', 'q', 'backspace'] ],
   [ VKeys.SELECT, ['f', 'l'] ],
-  [ VKeys.REFRESH, ['r'] ]
+  [ VKeys.REFRESH, ['r'] ],
+  [ VKeys.ROTATE, ['c', '/'] ]
 ]
 
 for(let [e, ks] of key2evt){
@@ -48,4 +49,17 @@ bus.$on('pkey', ({key, event}) => {
 
 bus.$on('rkey', ({key}) => {
   bus.$emit('key', {key})
+})
+
+io.on('message', msg => {
+  bus.$emit('message', msg)  
+})
+
+bus.$on('messgae', msg => {
+  Materialize.toast(msg, 3000, 'message-toast')
+  console.log("Message:", msg)
+})
+
+io.on('connected', ()=> {
+  store.dispatch('init_io')
 })

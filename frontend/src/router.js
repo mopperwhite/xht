@@ -13,6 +13,7 @@ const routes = [
   { path: '/settings', component: Settings },
   { path: '/download', component: Download },
   { path: '/read/:id', component: Reader },
+  // { path: '/read/:id/:page', component: Reader },
   { path: '/remote', component: Remote }
 ]
 
