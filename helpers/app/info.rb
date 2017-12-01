@@ -16,7 +16,11 @@ class WebViewer
 
 
   get '/api/image' do
+    etag '', :new_resource => true
     content_type 'image/png'
+    expires 10.hours.from_now
+    # cache_control :public, :max_age => 36000
+    expires 3600, :public, :must_revalidate
     id = params[:id].to_i
     filename = params[:filename]
     resize = params.has_key? :resize
@@ -31,6 +35,7 @@ class WebViewer
 
     fp = File.join(KeyValue['save_dir'], doujinshi.dir, filename)
     halt 401, 'File lost.' unless File.exists?(fp)
+    last_modified(File.mtime(fp))
     file = if resize
       width, height = params[:resize].split(?x).map(&:to_i)
       tempfile = Tempfile.new
