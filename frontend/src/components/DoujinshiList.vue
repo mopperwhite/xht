@@ -1,15 +1,16 @@
 <template lang="jade">
-.row(ref="row")
-  template(v-for="(m, index) in $store.state.doujinshi_list")
-    .doujinshi-card.col.s4.m3(
-        @click="read(m.id, index)",
-        :class='{"selected-card": index == $store.state.selected_index}',
-        :title="get_title(m)",
-        ref="card")
-      .card-image
-        img(:src="`/api/image?id=${m.id}&filename=${m.cover}&resize=800x800`")
-      .card-content
-        h6 {{get_title(m)}}
+.container
+  .row(ref="row")
+    template(v-for="(m, index) in $store.state.doujinshi_list")
+      .doujinshi-card.col.s4.m3(
+          @click="read(m.id, index)",
+          :class='{"selected-card": index == $store.state.selected_index}',
+          :title="get_title(m)",
+          ref="card")
+        .card-image
+          img(:src="`/api/image?id=${m.id}&filename=${m.cover}&resize=800x800`")
+        .card-content
+          h6 {{get_title(m)}}
 </template>
 
 <script>
@@ -25,6 +26,12 @@ export default {
       col_wrap: 1,
     }
   },
+  props: ['url'],
+  watch: {
+    url(){
+      this.reload()
+    }
+  },
   methods: {
     get_title(meta){
       return shorten_title(get_title(meta))
@@ -32,6 +39,9 @@ export default {
     read(id, index=0){
       this.$store.commit('move_selected_index', index)
       this.$router.push(`/read/${id}`)
+    },
+    reload(){
+      this.$store.dispatch('get_doujinshi_list', this.url)
     },
     move_to_view_r(next_index){
       this.$store.commit('move_selected_index', this.$store.state.selected_index + next_index)
@@ -41,15 +51,13 @@ export default {
       }
     }
   },
-  mounted(){
-    // this.selected_index = 0
-  },
   updated(){
     if(this.$refs.row && this.$refs.card){
       this.row_wrap = Math.round(this.$refs.row.clientWidth / this.$refs.card[0].clientWidth)
     }
   },
-  created(){
+  beforeMount(){
+    this.reload()
     bus.$off('key')
     bus.$on('key', ({key, event}) => {
       switch(key){
@@ -61,6 +69,10 @@ export default {
           let index = this.$store.state.selected_index
           let doujinshi =  this.$store.state.doujinshi_list[index]
           this.read(doujinshi.id, index); 
+          break;
+        case VKeys.REFRESH:
+          this.reload()
+          this.$store.dispatch('message', 'Reloaded')
           break;
       }
       

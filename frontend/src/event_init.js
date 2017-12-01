@@ -35,15 +35,15 @@ io.on('pong', payload => {
 
 io.on('key', key => {
   console.log(`remote: ${key}`)
-  if(store.state.remote_control)
-    bus.$emit('rkey', {
+  if(store.state.pair_code)
+    bus.$emit('key', {
       key
     })
 })
 
 bus.$on('pkey', ({key, event}) => {
   bus.$emit('key', {key, event})
-  if(store.state.remote_control)
+  if(store.state.pair_code)
     io.emit('key', key)
 })
 
@@ -55,7 +55,7 @@ io.on('message', msg => {
   bus.$emit('message', msg)  
 })
 
-bus.$on('messgae', msg => {
+bus.$on('message', msg => {
   Materialize.toast(msg, 3000, 'message-toast')
   console.log("Message:", msg)
 })

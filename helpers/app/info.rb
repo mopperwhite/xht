@@ -36,14 +36,20 @@ class WebViewer
     fp = File.join(KeyValue['save_dir'], doujinshi.dir, filename)
     halt 401, 'File lost.' unless File.exists?(fp)
     last_modified(File.mtime(fp))
-    file = if resize
-      width, height = params[:resize].split(?x).map(&:to_i)
+    file = if resize || params['enhance']
       tempfile = Tempfile.new
       tempfile.close
-      Magick::Image.read(fp)
-        .first
-        .crop_resized(width, height)
-        .write(tempfile.path)
+      img = Magick::Image.read(fp).first
+      if resize
+        width, height = params[:resize].split(?x).map(&:to_i)
+        img = img.crop_resized(width, height)
+      end
+      if params['enhance']
+        # img = img.equalize
+        img = img.normalize
+        # img = img.enhance
+      end
+      img.write(tempfile.path)
       tempfile.open
       tempfile
     else

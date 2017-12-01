@@ -34,6 +34,13 @@ div
             :class='get_read_mode()',
             :src="image_url(image_index)", 
             v-if="has_image(image_index)")
+      form.row(action="#")
+        .col.s6.switch
+          label
+            | ORIGINAL
+            input(type="checkbox", v-model="enhance")
+            span.lever
+            | ENHANCED
   template(v-else)
     dive-in(
       ref="divein",
@@ -78,6 +85,7 @@ export default {
       selected_index: 0,
       rotate_ang: 0,
       hold_rotation: false,
+      enhance: false,
     }
   },
   methods: {
@@ -88,12 +96,17 @@ export default {
     image_url(index, resize = null){
       let filename = this.$store.state.image_list[index]
       let id = this.$route.params.id
+      let url = `/api/image?id=${id}&filename=${filename}`
       if(resize){
         let [w, h] = resize
-        return `/api/image?id=${id}&filename=${filename}&resize=${w}x${h}`
+        url += `&resize=${w}x${h}`
       }else{
-        return `/api/image?id=${id}&filename=${filename}`
+        url += `/api/image?id=${id}&filename=${filename}`
       }
+      if(this.enhance){
+        url += '&enhance=yes'
+      }
+      return url
     },
     length(){
       return this.$store.state.image_list.length
