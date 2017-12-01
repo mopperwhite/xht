@@ -22,17 +22,24 @@ div
     :index.sync="selected_index",
     :id="$route.params.id",
     :image_list="$store.state.image_list")
-  .container
-    .row(v-if="$store.state.doujinshi_info")
-      doujinshi-info.col.s12(:meta="$store.state.doujinshi_info")
-    .row
-      .col.s12.doujinshi-image-container
-        img.reader-image(
-          @click="set_index(image_index +1)",
-          ref="image",
-          :class='get_read_mode()',
-          :src="image_url(image_index)", 
-          v-if="has_image(image_index)")
+  template(v-if="read_mode != 3")
+    .container
+      .row(v-if="$store.state.doujinshi_info")
+        doujinshi-info.col.s12(:meta="$store.state.doujinshi_info")
+      .row
+        .col.s12.doujinshi-image-container
+          img.reader-image(
+            @click="set_index(image_index +1)",
+            ref="image",
+            :class='get_read_mode()',
+            :src="image_url(image_index)", 
+            v-if="has_image(image_index)")
+  template(v-else)
+    dive-in(
+      ref="divein",
+      :rotate="rotate_ang",
+      :src="image_url(image_index)",
+      v-if="has_image(image_index)")
 </template>
 
 <script>
@@ -42,25 +49,24 @@ import {get_title, shorten_title} from '../helpers'
 
 import ImageList from '../components/ImageList.vue'
 import DoujinshiInfo from '../components/DoujinshiInfo.vue'
+import DiveIn from '../components/DiveIn.vue'
 
 const READ_MODE = [
   'full',
   'mid',
-  'whole'
+  'whole',
+  'dive'
 ]
 
 const MAX_SPEED = 40
 const SPEED_STEP= 2
 const SPEED_EXPIRE = 100
 
-const btn_stat = {
-  rotate_hold: 0,
-}
-
 export default {
   components: {
     ImageList,
-    DoujinshiInfo
+    DoujinshiInfo,
+    DiveIn
   },
   data () {
     return {
@@ -71,7 +77,7 @@ export default {
       selecting: false,
       selected_index: 0,
       rotate_ang: 0,
-      hold_rotation: false
+      hold_rotation: false,
     }
   },
   methods: {
@@ -155,19 +161,31 @@ export default {
         }
       }else{
         switch(key){
-          case VKeys.QUIT:
-            this.$router.back();
-            break;
-          case VKeys.LEFT:    this.set_index(this.image_index-1); break;
-          case VKeys.RIGHT:   this.set_index(this.image_index+1); break;
-          case VKeys.UP:      this.start_scroll(-this.move_distance()); break;
-          case VKeys.DOWN:    this.start_scroll(+this.move_distance()); break;
-          case VKeys.SELECT:  this.open_select_list(); break;
+          case VKeys.QUIT: this.$router.back(); break;
           case VKeys.SWITCH:  this.switch_mode(); break;
           case VKeys.REFRESH:  this.load(); break;
-          case VKeys.ROTATE:  
-            this.rotate()
-            break;
+          case VKeys.ROTATE:  this.rotate(); break;
+          case VKeys.SELECT:  this.open_select_list(); break;
+          default:
+            if(this.read_mode == 3){ // dive in
+              let di = this.$refs.divein
+              if(!di) break;
+              switch(key){
+                case VKeys.LEFT:
+                case VKeys.RIGHT:
+                case VKeys.UP:
+                case VKeys.DOWN:
+                  di.move(key);
+                  break;
+              }
+            }else{
+              switch(key){
+                case VKeys.LEFT:    this.set_index(this.image_index-1); break;
+                case VKeys.RIGHT:   this.set_index(this.image_index+1); break;
+                case VKeys.UP:      this.start_scroll(-this.move_distance()); break;
+                case VKeys.DOWN:    this.start_scroll(+this.move_distance()); break;
+              }
+            }
         }
       }
     })
