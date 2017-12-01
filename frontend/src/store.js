@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
 
+import bus from './bus'
+
 import api_actions from './actions/api'
 import io_actions from './actions/io'
 
@@ -42,6 +44,9 @@ const store = new Vuex.Store({
     }
   },
   actions: {
+    message(_, msg){
+      bus.$emit('message', msg)
+    },
     ...api_actions,
     ...io_actions
   }

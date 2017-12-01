@@ -41,34 +41,41 @@ export default {
       last_pos: null,
       offset_x: 0,
       offset_y: 0,
-      image_id: `divein_image_${Math.ceil( Math.random() * (1<<30) )}` 
+      image_id: `divein_image_${Math.ceil( Math.random() * (1<<30) )}`,
     }
   },
   props: ['src', 'rotate'],
-  beforeMount(){
+  watch: {
+    src(news, olds){
+      this.offset_x=
+      this.offset_y= 0
+      this.move_img(0, 0)
+    }
   },
   beforeDestory(){
     console.log(233)
   },
   methods: {
+    move_img(x, y){
+      let img = document.getElementById(this.image_id)
+      img.style.left =  -parseInt(x) + 'px'
+      img.style.top =   -parseInt(y) + 'px'
+    },
     dmove([dx, dy]){
       [this.offset_x, this.offset_y] = this.pos_valid([
         this.offset_x + dx,
         this.offset_y + dy
       ])
-      let img = document.getElementById(this.image_id)
-      img.style.left =  -parseInt(this.offset_x) + 'px'
-      img.style.top =   -parseInt(this.offset_y) + 'px'
-      console.log(img.style)
-      console.log(this.offset_x, this.offset_y)
+      this.move_img(this.offset_x, this.offset_y)
     },
     move(vk){
       let w = this.$refs.image.clientWidth
       let h = this.$refs.image.clientHeight
       let sw = document.body.clientWidth
       let sh = document.body.clientHeight
-      let dx = DX[vk] * 0.3 * sw
-      let dy = DY[vk] * 0.3 * sw
+      let d = Math.min(sw*0.3, sh*0.3) 
+      let dx = DX[vk] * d
+      let dy = DY[vk] * d
       this.dmove([+dx, +dy])
     },
     pos_valid([x, y]){

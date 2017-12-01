@@ -166,6 +166,7 @@ export default {
           case VKeys.REFRESH:  this.load(); break;
           case VKeys.ROTATE:  this.rotate(); break;
           case VKeys.SELECT:  this.open_select_list(); break;
+          case VKeys.ENTER:   this.set_index(this.image_index+1); break;
           default:
             if(this.read_mode == 3){ // dive in
               let di = this.$refs.divein
