@@ -1,12 +1,16 @@
 <template lang="jade">
 #app
-  router-view
+  router-view(v-if="$store.state.accessable")
+  login(v-else)
 </template>
 
 <script>
-import './store'
+import Login from './routes/Login.vue' 
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+    Login
+  }
 }
 </script>
 

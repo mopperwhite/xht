@@ -15,13 +15,13 @@ class KeyValue
     def [](key)
       key = key.to_s
       row = first(k: key)
-      val = row.nil? ? @@_default[key] : JSON.parse(row.v)
+      val = row.nil? ? @@_default[key] : YAML.load(row.v)
       throw KeyError.new("Key `#{key}' does not exist.`") if val.nil?
       val
     end
     def []=(key, value)
       item = first_or_create(k: key.to_s)
-      item.v = value.to_yaml
+      item.v = value.to_json
       item.save
       value
     end

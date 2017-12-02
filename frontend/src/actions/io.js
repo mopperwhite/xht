@@ -2,6 +2,7 @@ import io from '../io'
 
 function init_io({commit, dispatch}){
   dispatch('init_remote_control')
+  commit('set_accessable')
 }
 
 function init_remote_control({commit, dispatch}){

@@ -3,6 +3,7 @@ import VKeys from './vkeys'
 import bus from './bus'
 import io from './io'
 import store from './store'
+import axios from 'axios'
 
 const key2evt = [
   [ VKeys.UP,     ['w', 'up'] ],
@@ -60,6 +61,15 @@ bus.$on('message', msg => {
   console.log("Message:", msg)
 })
 
+io.on('access', res => {
+  if(res){
+    store.dispatch('init_io')
+  }else{
+    store.dispatch('message', "Error: Invalid WS Access Code")
+  }
+})
+
+
 io.on('connected', ()=> {
-  store.dispatch('init_io')
+  store.dispatch('access_ws')
 })

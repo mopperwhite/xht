@@ -10,11 +10,11 @@ div
     @click="rotate",
     @dblclick="hold_rotation = !hold_rotation; rotate(); rotate();",
     :class="{'act-hold': hold_rotation}")
-    i.material-icons.large rotate_right
+    i.material-icons rotate_right
   button.d-navi-btn.navi-priv(@click="set_index(image_index -1)")
-    i.material-icons.large keyboard_arrow_left
+    i.material-icons keyboard_arrow_left
   button.d-navi-btn.navi-next(@click="set_index(image_index +1)")
-    i.material-icons.large keyboard_arrow_right
+    i.material-icons keyboard_arrow_right
   image-list(
     v-if="selecting", 
     @selected="select_image",
@@ -100,11 +100,9 @@ export default {
       if(resize){
         let [w, h] = resize
         url += `&resize=${w}x${h}`
-      }else{
-        url += `/api/image?id=${id}&filename=${filename}`
       }
       if(this.enhance){
-        url += '&enhance=yes'
+        url += '&enhance=normalize'
       }
       return url
     },

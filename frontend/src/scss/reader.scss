@@ -40,6 +40,7 @@
     &.img-dive{
       position: fixed;
       min-#{$width-name}: 100vw;
+      max-#{$width-name}: 200vw;
       min-#{$height-name}: 100vh;
     }
   }
@@ -68,6 +69,7 @@
       @include doujinshi-image-size($class-name, "height", "width");
     }
     &.#{$class-name}{
+      transform-origin: 50% 50%;
       $real_ang: +$ang;
       transform:      rotate(#{$real_ang}deg);
       -ms-transform:  rotate(#{$real_ang}deg);		/* IE 9 */

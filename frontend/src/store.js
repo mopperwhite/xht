@@ -14,9 +14,13 @@ const store = new Vuex.Store({
     doujinshi_list: [],
     image_list: [],
     doujinshi_info: null,
-    pair_code: null
+    pair_code: null,
+    accessable: false
   },
   mutations: {
+    set_accessable(state){
+      state.accessable = true
+    },
     clear_doujinshi_info(state){
       state.doujinshi_info = null
       state.image_list = []

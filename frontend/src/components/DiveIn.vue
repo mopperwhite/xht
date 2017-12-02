@@ -42,6 +42,7 @@ export default {
       offset_x: 0,
       offset_y: 0,
       image_id: `divein_image_${Math.ceil( Math.random() * (1<<30) )}`,
+      last_finger_dist: null
     }
   },
   props: ['src', 'rotate'],
@@ -51,9 +52,6 @@ export default {
       this.offset_y= 0
       this.move_img(0, 0)
     }
-  },
-  beforeDestory(){
-    console.log(233)
   },
   methods: {
     move_img(x, y){
@@ -68,33 +66,59 @@ export default {
       ])
       this.move_img(this.offset_x, this.offset_y)
     },
+    get_wh(){
+      let img = document.getElementById(this.image_id)
+      let w = img.clientWidth
+      let h = img.clientHeight
+      if(this.rotate % 180 == 0){
+        return [w, h]
+      }else{
+        return [h, w]
+      }
+    },
     move(vk){
-      let w = this.$refs.image.clientWidth
-      let h = this.$refs.image.clientHeight
+      let [w,h] = this.get_wh()
       let sw = document.body.clientWidth
       let sh = document.body.clientHeight
-      let d = Math.min(sw*0.3, sh*0.3) 
+      let d = Math.min(sw*0.2, sh*0.2) 
       let dx = DX[vk] * d
       let dy = DY[vk] * d
       this.dmove([+dx, +dy])
     },
     pos_valid([x, y]){
-      let w = this.$refs.image.clientWidth
-      let h = this.$refs.image.clientHeight
-      let sw = document.body.clientWidth
-      let sh = document.body.clientHeight
-      let max_x = w - sw
-      let max_y = h - sh
-      x = Math.min(Math.max(0, x), max_x)
-      y = Math.min(Math.max(0, y), max_y)
+      let [w,h] = this.get_wh()
+      // let sw = document.body.clientWidth
+      // let sh = document.body.clientHeight
+      // let max_x = w - sw
+      // let max_y = h - sh
+      // x = Math.min(Math.max(0, x), max_x)
+      // y = Math.min(Math.max(0, y), max_y)
+      let max_n = Math.max(w, h) * 1.5
+      x = Math.min(Math.max(-max_n, x), max_n)
+      y = Math.min(Math.max(-max_n, y), max_n)
       return [x, y]
     },
     get_event_pos(evt){
       if(window.TouchEvent && (evt instanceof window.TouchEvent)){
         let t = evt.targetTouches[0]
+        let scale = 1.0
+        if(evt.targetTouches.length > 1){
+          if(this.last_finger_dist){
+            let t1 = evt.targetTouches[0]
+            let fd = Math.sqrt(
+              Math.pow(t1.screenX - t.screenX , 2) +
+              Math.pow(t1.screenY - t.screenY , 2)
+            )
+            scale = fd / this.last_finger_dist
+            this.last_finger_dist = fd
+          }
+        }else{
+          this.last_finger_dist = null
+        }
         return [t.screenX, t.screenY]
       }else if(evt.screenX && evt.screenY){
-        return [evt.screenX, evt.screenY]
+        this.last_finger_dist = null
+        return [evt.screenX, evt.screenY, 1.0]
       }else{
         console.warn(evt)
         throw "Unknown Event"
@@ -102,7 +126,7 @@ export default {
     },
     start_drawing(evt){
       this.drawing_started = true
-      let [x, y] = this.get_event_pos(evt)
+      let [x, y, scale] = this.get_event_pos(evt)
       this.last_pos = [x, y]
       return false
     },
@@ -111,7 +135,14 @@ export default {
     },
     drawing(evt){
       if(!this.drawing_started) return;
-      let [x, y] = this.get_event_pos(evt)
+      let ow = this.$refs.image.clientWidth
+      let oh = this.$refs.image.clientHeight
+      let [x, y, scale] = this.get_event_pos(evt)
+      let img = document.getElementById(this.image_id)
+      if(img){
+        img.style.width = parseInt(scale * ow) + 'px'
+        img.style.height = parseInt(scale * oh) + 'px'
+      }
       let [lx, ly] = this.last_pos
       let dx = x - lx
       let dy = y - ly

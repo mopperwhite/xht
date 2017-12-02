@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 #encoding=utf-8
+require './helpers/accessable'
 class WSEvent
   def initialize
     @procs = {}
@@ -56,7 +57,7 @@ class WSRoom
     @ws_rooms.default_proc = proc {|d, k| d[k] = Array.new}
     @ws_room_dict  = {}
     
-    @event.on 'pair' do |code, ws|
+    on 'pair' do |code, ws|
       $logger.debug "joined room: #{code} -- #{ws}"
       puts @ws_room_dict.keys
       if @ws_room_dict.has_key?(ws)
@@ -65,11 +66,11 @@ class WSRoom
       join_room(ws, code)
     end
 
-    @event.on 'leave' do |code, ws|
+    on 'leave' do |code, ws|
       leave_room(ws)
     end
 
-    @event.on 'key' do |key, ws|
+    on 'key' do |key, ws|
       broadcast(ws, 'key', key)
     end
 
@@ -79,8 +80,19 @@ class WSRoom
     end
 
     @event.on 'disconnected' do |_, ws|
-      puts "STILL GOOD"
+      $logger.debug "disconnected from #{ws}"
       leave_room(ws)
+      AccessCode.unlink(ws)
+    end
+
+    @event.on 'access' do |code, ws|
+      emit(ws, 'access', AccessCode.register(ws, code))
+    end
+  end
+
+  def on(evt, &block)
+    @event.on(evt)do |payload, ws|
+      block.call(payload, ws) if AccessCode.accessable?(ws)
     end
   end
 
