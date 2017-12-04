@@ -12,5 +12,15 @@ class WebViewer
     halt 401 if doujinshi.nil?
     doujinshi.images.to_json
   end
+  
+  get '/api/initialized' do
+    DoujinshiMeta.all(
+      DoujinshiMeta.doujinshi.download_task.status => :initialized
+    ).map do |meta|
+      meta.to_struct.to_h.merge(
+        id: meta.doujinshi_id
+      )
+    end.to_json
+  end
 
 end

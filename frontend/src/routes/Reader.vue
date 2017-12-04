@@ -1,5 +1,12 @@
 <template lang="jade">
 div
+  image-list(
+    v-if="selecting", 
+    @selected="select_image",
+    @acquire_close="close_select_list",
+    :index.sync="selected_index",
+    :id="$route.params.id",
+    :image_list="$store.state.image_list")
   button.d-act-btn.act-quit(@click="$router.back()")
     i.material-icons.large close
   button.d-act-btn.act-select(@click="selecting = true")
@@ -15,13 +22,6 @@ div
     i.material-icons keyboard_arrow_left
   button.d-navi-btn.navi-next(@click="set_index(image_index +1)")
     i.material-icons keyboard_arrow_right
-  image-list(
-    v-if="selecting", 
-    @selected="select_image",
-    @acquire_close="close_select_list",
-    :index.sync="selected_index",
-    :id="$route.params.id",
-    :image_list="$store.state.image_list")
   template(v-if="read_mode != 3")
     .container
       .row(v-if="$store.state.doujinshi_info")

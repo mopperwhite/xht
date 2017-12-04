@@ -58,9 +58,17 @@ function get_doujinshi_info({commit}, id){
   })
 }
 
+function get_downloading_list({commit}){
+  axios.get(`/api/initialized`)
+  .then(list => {
+    commit('set_downloading_list', list)
+  })
+}
+
 export default {
   get_doujinshi_list,
   get_doujinshi_info,
   access_ws,
-  login
+  login,
+  get_downloading_list
 }

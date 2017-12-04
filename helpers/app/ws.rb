@@ -8,6 +8,14 @@ class WebViewer
   @@ws_event = WSEvent.new
   @@ws_room = WSRoom.new(@@ws_event)
 
+  DownloadServer.on_message do |msg|
+    @@ws_room.global_broadcast("download_message", msg)
+  end
+
+  DownloadServer.on_update do
+    @@ws_room.global_broadcast("update_download_status", msg)
+  end
+
   get '/io' do
     # puts "FUCK"
     # puts JSON.pretty_generate(request.env)

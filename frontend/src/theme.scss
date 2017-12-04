@@ -25,9 +25,56 @@ html, body{
 }
 
 @import "./scss/reader.scss";
+@import "./scss/download.scss";
 
 .doujinshi-card.selected-card{
   @extend .blue-grey.darken-2 ; 
+  .card-image{
+    img{
+      filter: brightness(1.0);
+    }
+  }
+}
+
+.doujinshi-card.downloading-card{
+  .card-image{
+    img{
+      filter: brightness(.3);
+    }
+    a{
+      @extend .red ;
+    }
+  }
+}
+
+div{
+  .text-center-container{
+    // width: 50%;
+    // height: 50%;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: rgba(0,0,0,0);
+    p{
+      width: 100%;
+      .image-icon{
+        
+      }
+    }
+    // .image-icon{
+      // position: absolute;
+      // right: -20px;
+      // bottom: -20px;
+      // width: 32px;
+      // height: 32px;
+    // }
+  }
+}
+
+h1{
+  @extend .blue-grey-text.text-lighten-5 ;
 }
 
 .doujinshi-card{
@@ -38,6 +85,8 @@ html, body{
     margin: 0.25rem;
     img{
       @extend .responsive-img ;
+      filter: brightness(.9);
+      display: block;
     }
   }
   .card-content{

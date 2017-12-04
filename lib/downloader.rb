@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 #encoding=utf-8
+require 'thread'
 
 require './helpers/structs'
 require './helpers/downloader/helper'
@@ -10,12 +11,13 @@ require './helpers/downloader/proc'
 $downloaders = []
 
 module Downloader
-  attr_reader :meta, :agent, :task, :fiber
+  attr_reader :meta, :agent, :task, :fiber, :messages, :doujinshi
 
   def initialize(doujinshi)
     initialize_agent()
     @doujinshi = doujinshi
     @task      = doujinshi.download_task
+    @messages  = Queue.new
     
     _init_variables()
   end
@@ -33,7 +35,12 @@ end
 class << Downloader
 
   def add_task(url, tag = nil)
-    doujinshi = Doujinshi.add(url, tag)
+    if exists?(url)
+      false
+    else
+      Doujinshi.add(url, tag)
+      true
+    end
   end
 
   def exists?(url)
@@ -56,7 +63,7 @@ class << Downloader
 
   def start_top_task!
     doujinshi = top_task
-    download_by_doujinshi(doujinshi, false, KeyValue['save_dir'])
+    download_by_doujinshi(doujinshi, true, KeyValue['save_dir'])
   end
 
   def download_by_doujinshi(doujinshi, server_mode, dir)

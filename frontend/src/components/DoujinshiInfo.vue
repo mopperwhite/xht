@@ -20,6 +20,7 @@
         .col.s10
           .chip(v-for="t in meta.tags")
             | {{t}}
+            i.close.material-icons(@click="remove_tag(t)") close
 
 </template>
 
@@ -40,6 +41,11 @@ export default {
     for(let t of Object.values(this.meta.title_lang)){
       if(t)
         this.titles.push(t)
+    }
+  },
+  methods: {
+    remove_tag(tag){
+      this.$emit('remove_tag', tag)
     }
   }
 }

@@ -25,8 +25,12 @@ module Downloader
           url = q.top
           instance_exec( url, &self.class.class_variable_get(:"@@#{t}_proc") )
           q.pop
+          @messages.push "URL: #{url}"
+          # $logger.debug 'Yield'
           Fiber.yield
+          # $logger.debug 'Resumed'
         end
+        Fiber.yield
       end
       finish!
     end

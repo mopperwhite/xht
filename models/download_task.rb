@@ -10,7 +10,7 @@ class DownloadTask
   property :status,     Enum[:new, :initialized, :finished]
   
   belongs_to  :doujinshi
-  has n,      :stored_queue
+  has n,      :stored_queue, :constraint => :destroy
   
   def queue(type)
     DownloadTaskQueue.new self, type

@@ -18,9 +18,9 @@ class DoujinshiMeta
   property :cover,      String
   
   belongs_to  :doujinshi
-  has n, :doujinshi_tag
-  has n, :doujinshi_character
-  has n, :doujinshi_title
+  has n, :doujinshi_tag, :constraint => :destroy
+  has n, :doujinshi_character, :constraint => :destroy
+  has n, :doujinshi_title, :constraint => :destroy
 
   def to_struct
     MetaInfo.new(

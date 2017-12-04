@@ -1,11 +1,15 @@
 <template lang="jade">
 div.container
   .row
+    .col.s12
+      h1 Authorization
+  .row
     .col.s12.input-field
-      input#usernameI(v-model="username")
+      input#usernameI(v-model="username", type="text", @keyup.enter="$refs.pwd_input.focus()")
       label(for="usernameI") Username
+  .row
     .col.s12.input-field
-      input#passwordI(v-model="password", type="password")
+      input#passwordI(ref="pwd_input",v-model="password", type="password", @keyup.enter="login")
       label(for="passwordI") Password
     button.col.s12.btn(@click="login") Login
 </template>

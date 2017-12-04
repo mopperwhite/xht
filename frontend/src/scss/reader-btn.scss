@@ -1,3 +1,12 @@
+.image-list{
+  .d-select-bar-mask{
+    z-index: 499;
+  }
+  .d-select-bar{
+    z-index: 500;
+  } 
+}
+
 .d-side-btn{
   @extend .center ;
   // @extend .blue-grey.darken-3 ;
@@ -51,6 +60,8 @@ $d-priv-btn-height: 100% - $d-act-left-height*3;
   left: 0;
   height: $d-priv-btn-height;
 }
+
+
 
 .d-navi-btn.navi-next{
   right: 0;

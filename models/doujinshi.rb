@@ -6,9 +6,9 @@ class Doujinshi
   property  :url,  String, length: 0..400
   property  :dir,  String, length: 0..400
 
-  has 1, :doujinshi_meta
-  has 1, :download_task
-  has n, :doujinshi_image
+  has 1, :doujinshi_meta, :constraint => :destroy
+  has 1, :download_task, :constraint => :destroy
+  has n, :doujinshi_image, :constraint => :destroy
 
   def create_meta(meta)
     dm = DoujinshiMeta.from_struct(meta, self)

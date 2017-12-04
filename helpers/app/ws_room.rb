@@ -2,13 +2,16 @@
 #encoding=utf-8
 require './helpers/accessable'
 class WSEvent
+  attr_reader :connections
   def initialize
     @procs = {}
     @procs.default_proc = proc {|d, k| d[k] = Array.new}
+    @connections = {}
   end
 
   def on_open(ws)
     $logger.debug "WS connected: #{ws}"
+    @connections[ws] = true
   end
 
   def on_message(ws, msg)
@@ -35,6 +38,7 @@ class WSEvent
   def on_close(ws)
     $logger.debug "WS disconnected: #{ws}"
     emit_local_message(ws, 'disconnected')
+    @connections.delete(ws)
   end
 
   def on(event, &block)
@@ -59,7 +63,7 @@ class WSRoom
     
     on 'pair' do |code, ws|
       $logger.debug "joined room: #{code} -- #{ws}"
-      puts @ws_room_dict.keys
+      # puts @ws_room_dict.keys
       if @ws_room_dict.has_key?(ws)
         leave_room(ws)
       end
@@ -102,6 +106,14 @@ class WSRoom
     @ws_rooms[code]&.each do |w|
       next if !self_included && w == ws
       emit(w, evt, msg)
+    end
+  end
+
+  def global_broadcast(evt, payload)
+    $logger.debug "Global broadcast: #{evt}"
+    @event.connections.each_key do |ws|
+      $logger.debug "#{evt} => #{ws}"
+      emit(ws, evt, payload) if AccessCode.accessable?(ws)
     end
   end
 

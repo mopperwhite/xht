@@ -1,5 +1,5 @@
 <template lang="jade">
-div
+div.image-list
   .d-select-bar
     template(v-for="(f, i) in image_list")
       div(
@@ -8,11 +8,13 @@ div
         @click="select(i)")
         img(:src='image_url(i, [200, 300])')
   .d-select-bar-mask(@click="acquire_close")
-    p CLOSE
+    text-center
+      span CLOSE
 </template>
 
 <script>
 import {get_title, shorten_title} from '../helpers'
+import TextCenter from '../components/TextCenter.vue'
 
 export default {
   data () {
@@ -25,6 +27,9 @@ export default {
         this.$refs.select_list[this.index].scrollIntoView()
       }
     }
+  },
+  components: {
+    TextCenter
   },
   props: ['image_list', 'id', 'index'],
   methods: {

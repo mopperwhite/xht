@@ -13,6 +13,7 @@ const store = new Vuex.Store({
     selected_index: 0,
     doujinshi_list: [],
     image_list: [],
+    downloading_list: [],
     doujinshi_info: null,
     pair_code: null,
     accessable: false
@@ -20,6 +21,9 @@ const store = new Vuex.Store({
   mutations: {
     set_accessable(state){
       state.accessable = true
+    },
+    set_downloading_list(state, list){
+      state.downloading_list = list
     },
     clear_doujinshi_info(state){
       state.doujinshi_info = null

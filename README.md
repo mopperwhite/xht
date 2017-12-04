@@ -39,6 +39,8 @@ rackup -p 8080
 
 ## Set authorization
 
+The following command can be used to enable/disable authorization and create/reset an account.
+
 ```bash
 rake seed
 ```
@@ -55,7 +57,7 @@ Please use HTTPS.
 
 ## Remote Control
 
-To use remote control, two devices should be prepared.
+To use remote control, there should be two devices prepared.
 
 Open [http://localhost:8000/#/remote](http://127.0.0.1:8000/#/remote) in the browsers and type a pair code in both devices, and they will be a control-pair.
 

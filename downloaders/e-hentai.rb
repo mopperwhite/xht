@@ -56,6 +56,7 @@ class EHentai
     next_url = doc.at("a#next")[:href]
     $logger.debug "Next: #{next_url}"
     add_image_page(next_url) if next_url != url
+    sleep 1
   end
 
   on_image do |url|

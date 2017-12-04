@@ -73,3 +73,13 @@ io.on('access', res => {
 io.on('connected', ()=> {
   store.dispatch('access_ws')
 })
+
+// io.on('download_message', (msg) => {
+//   console.log('D MSG:', msg)
+//   bus.$emit('download_message', msg)
+// })
+
+io.on('update_download_status', () => {
+  console.log("FICK")
+  store.dispatch('get_downloading_list')
+})
