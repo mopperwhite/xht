@@ -13,13 +13,15 @@ $downloaders = []
 module Downloader
   attr_reader :meta, :agent, :task, :fiber, :messages, :doujinshi
 
-  def initialize(doujinshi)
+  def initialize(doujinshi, dir)
     initialize_agent()
     @doujinshi = doujinshi
     @task      = doujinshi.download_task
     @messages  = Queue.new
+    @doujinshi_dir = dir
     
     _init_variables()
+    # init_meta()
   end
 
   # INCLUDED
@@ -36,10 +38,12 @@ class << Downloader
 
   def add_task(url, tag = nil)
     if exists?(url)
-      false
+      nil
     else
-      Doujinshi.add(url, tag)
-      true
+      doujinshi = Doujinshi.add(url, tag)
+      downloader = get_downloader_by_doujinshi(doujinshi, KeyValue['save_dir'])
+      # downloader.init_meta
+      downloader
     end
   end
 
@@ -66,11 +70,15 @@ class << Downloader
     download_by_doujinshi(doujinshi, true, KeyValue['save_dir'])
   end
 
-  def download_by_doujinshi(doujinshi, server_mode, dir)
+  def get_downloader_by_doujinshi(doujinshi, dir)
     down_class  = $downloaders.detect{|d| d.match?(doujinshi.url, doujinshi.download_task.tag)}
     raise RuntimeError.new "No matched donwloader for: #{url}" if down_class.nil?
-    downloader  = down_class.new(doujinshi)
-    downloader.download(dir, server_mode)
+    downloader  = down_class.new(doujinshi, dir)
+  end
+
+  def download_by_doujinshi(doujinshi, server_mode, dir)
+    downloader = get_downloader_by_doujinshi(doujinshi, dir)
+    downloader.download(server_mode)
     downloader
   end
 end

@@ -80,6 +80,6 @@ io.on('connected', ()=> {
 // })
 
 io.on('update_download_status', () => {
-  console.log("FICK")
   store.dispatch('get_downloading_list')
+  store.dispatch('get_doujinshi_list', '/api/query')
 })

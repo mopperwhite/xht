@@ -1,20 +1,22 @@
 <template lang="jade">
-.doujinshi-card(
+.doujinshi-card.card(
     :class='{"selected-card": selected, "downloading-card": !finished}',
     :title="get_title(doujinshi)",
     ref="card",
     @click="$emit('click', $event)"
     )
   .card-image
-    img(:src="`/api/image?id=${doujinshi.id}&filename=${doujinshi.cover}&resize=800x800`")
     template(v-if="!finished")
       text-center
         i.image-icon.material-icons.small file_download
-      a.btn-floating.halfway-fab(@click="delete_doujinshi")
+      a.btn-floating.halfway-fab.large(@click="delete_doujinshi")
         i.material-icons.large close
+    img(:src="`/api/image?id=${doujinshi.id}&filename=${doujinshi.cover}&resize=600x600`")
        
   .card-content
-    h6 {{get_title(doujinshi)}}
+    span.card-title.activator
+      span {{get_title(doujinshi)}}
+
 </template>
 
 <script>
@@ -56,6 +58,7 @@ export default {
     },
     delete_doujinshi(){
       console.log("DELETE", this.doujinshi.id)
+      return false
     }
   }
 }

@@ -1,3 +1,4 @@
+$download_server_start_queue = Queue.new
 module DownloadServer
   module_function
   def start
@@ -6,16 +7,23 @@ module DownloadServer
     @thread = Thread.new do
       $logger.debug 'Download Server Started'
       until @stop_flag
+        until $download_server_start_queue.empty?
+          downloader = $download_server_start_queue.pop
+          downloader.init_meta()
+          $logger.debug "Initialize Task #{downloader.task.url}"
+          _emit_message("Initialize Task #{downloader.task.url}")
+          _update()
+        end
         if @fiber.nil?
           if Downloader.has_task?
             $logger.debug 'Proc New Task'
             @downloader = Downloader.start_top_task!
-            $logger.debug @downloader
             @fiber = @downloader.fiber
+            $logger.debug @downloader
             _update()
             _emit_message("Started: #{@downloader.doujinshi.url}")
           else
-            # $logger.debug 'No More Task'
+            $logger.debug 'No More Task'
             sleep 2
             next
           end
@@ -58,5 +66,9 @@ module DownloadServer
 
   def on_update(&block)
     $download_server_status_update_messager = block
+  end
+
+  def add_task(downloader)
+    $download_server_start_queue.push(downloader)
   end
 end

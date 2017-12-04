@@ -109,7 +109,7 @@ class WSRoom
     end
   end
 
-  def global_broadcast(evt, payload)
+  def global_broadcast(evt, payload=nil)
     $logger.debug "Global broadcast: #{evt}"
     @event.connections.each_key do |ws|
       $logger.debug "#{evt} => #{ws}"

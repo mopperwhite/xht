@@ -4,6 +4,7 @@ require './helpers/file_cache'
 module WebViewerImageHelper
   module_function
   def load_file(path, fp, resize, enhance)
+    halt 404 unless File.exists?(fp)
     if resize || enhance
       if FileCache.exists?(path)
         file = FileCache.get(path)

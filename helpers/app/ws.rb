@@ -13,7 +13,7 @@ class WebViewer
   end
 
   DownloadServer.on_update do
-    @@ws_room.global_broadcast("update_download_status", msg)
+    @@ws_room.global_broadcast("update_download_status")
   end
 
   get '/io' do

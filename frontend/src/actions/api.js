@@ -11,6 +11,8 @@ axios.interceptors.response.use(
         let msg = error.response.body
         console.log("ERROR!", msg)
         store.dispatch('message', `Error: ${msg}`)
+    }else{
+      console.warn("ERROR!", msg)
     }
     return Promise.reject(error.response);
   }

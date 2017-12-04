@@ -33,7 +33,10 @@ export default {
       this.$http.post('/api/download', {
         url: this.download_link
       }).then(res => {
-        this.download_link = ''
+        if(res.accepted)
+          this.download_link = ''
+        else
+          this.$store.dispatch('message', 'Task Exists.')
       })
     }
   },

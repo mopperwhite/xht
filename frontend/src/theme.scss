@@ -82,7 +82,7 @@ h1{
   @extend .blue-grey.darken-3 ;
   @extend .blue-grey-text.text-lighten-5 ;
   .card-image{
-    margin: 0.25rem;
+    // margin: 0.25rem;
     img{
       @extend .responsive-img ;
       filter: brightness(.9);
@@ -92,8 +92,8 @@ h1{
   .card-content{
     overflow-x: hidden;
     padding: 0.5rem;
-    h6 {
-      font-size: 1.5rem;
+    .card-title {
+      // font-size: 1.5rem;
       text-align: center;
       white-space: nowrap;
     }

@@ -23,4 +23,14 @@ class WebViewer
     end.to_json
   end
 
+  post '/api/delete' do
+    doujinshi = Doujinshi.first(id: params[:id].to_i)
+    halt 401 if doujinshi.nil?
+    finished = doujinshi.download_task.status == :finished
+    DownloadServer.stop unless finished
+    doujinshi.delete
+    DownloadServer.start unless finished
+    true.to_json
+  end
+
 end

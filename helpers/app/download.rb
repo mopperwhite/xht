@@ -9,14 +9,16 @@ class WebViewer
     halt 401, 'URL needed.' if params[:url].nil?
     case URI(params[:url])
     when URI::HTTP, URI::HTTPS, URI::FTP
-      r = Downloader.add_task(params[:url])
-      if r
+      downloader = Downloader.add_task(params[:url])
+      if downloader
+        DownloadServer.add_task(downloader)
         @@ws_room.global_broadcast("message", "Task Accepted: #{params[:url]}")
+        @@ws_room.global_broadcast("update_download_status")
       else
         @@ws_room.global_broadcast("message", "Task Already Exists: #{params[:url]}")
       end
       {
-        accepted: r
+        accepted: ! downloader.nil?
       }.to_json
     else
       halt 401, 'Invalid URI.'

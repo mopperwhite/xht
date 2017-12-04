@@ -2,15 +2,19 @@
 #encoding=utf-8
 module Downloader
   
-  def download(doujinshi_dir = '.', server_mode = false)
-    @doujinshi_dir = doujinshi_dir
+  def init_meta
+    @meta = MetaInfo.new
+    instance_exec(@task.url, &self.class.class_variable_get(:'@@first_page_proc'))
+    @doujinshi.create_meta(@meta)
+    $logger.debug( @meta )
+    @doujinshi.set_dir(dir_name)
+    f = File.join(@doujinshi_dir, dir_name)
+    Dir.mkdir(f) unless Dir.exists?(f)
+  end
+
+  def download(server_mode = false)
     if @task.status == :new
-      @meta = MetaInfo.new
-      instance_exec(@task.url, &self.class.class_variable_get(:'@@first_page_proc'))
-      @doujinshi.create_meta(@meta)
-      @doujinshi.set_dir(dir_name)
-      f = File.join(@doujinshi_dir, dir_name)
-      Dir.mkdir(f) unless Dir.exists?(f) 
+      init_meta
     else
       @meta = @doujinshi.get_meta
     end
