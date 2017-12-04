@@ -1,5 +1,13 @@
 <template lang="jade">
 .container
+  // .fixed-action-btn
+  //   a.btn-floating.btn-large.red
+  //     i.large.material-icons mode_edit
+  //   br
+  //   a.btn-floating.btn-large.red
+  //     i.large.material-icons mode_edit
+  
+  .fixed-action-btn
   .row
     router-link.btn.col.s4(to="/download") Download
     router-link.btn.col.s4(to="/remote") Remote
@@ -30,7 +38,6 @@ export default {
       this.$router.push(`/read/${id}`)
     },
     onkey({key}){
-      console.log(key)
       if(key === VKeys.ROTATE){
         this.random_choice()
       }
