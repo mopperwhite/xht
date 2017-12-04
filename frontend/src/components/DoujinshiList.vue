@@ -56,7 +56,6 @@ export default {
     }
   },
   mounted(){
-    console.log(233)
     let index = this.$store.state.selected_index
     if(this.$refs.card && this.$refs.card.length){
       this.$refs.card[index].scrollIntoView()
@@ -66,6 +65,7 @@ export default {
     this.reload()
     bus.$off('key')
     bus.$on('key', ({key, event}) => {
+      this.$emit('vkey', {key})
       switch(key){
         case VKeys.UP   : this.move_to_view_r(- this.row_wrap); break;
         case VKeys.DOWN : this.move_to_view_r(+ this.row_wrap); break;

@@ -6,12 +6,12 @@
     @click="$emit('click', $event)"
     )
   .card-image
+    img(:src="`/api/image?id=${doujinshi.id}&filename=${doujinshi.cover}&resize=600x600`")
     template(v-if="!finished")
-      text-center
+      text-center#mask
         i.image-icon.material-icons.small file_download
       a.btn-floating.halfway-fab.large(@click="delete_doujinshi")
         i.material-icons.large close
-    img(:src="`/api/image?id=${doujinshi.id}&filename=${doujinshi.cover}&resize=600x600`")
        
   .card-content
     span.card-title.activator
@@ -58,8 +58,10 @@ export default {
     },
     delete_doujinshi(){
       console.log("DELETE", this.doujinshi.id)
-      return false
+      this.$store.dispatch('delete_doujinshi', this.doujinshi.id)
     }
   }
 }
 </script>
+<style scoped>
+</style>

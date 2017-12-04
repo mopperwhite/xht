@@ -67,10 +67,21 @@ function get_downloading_list({commit}){
   })
 }
 
+function delete_doujinshi({commit, dispatch}, id){
+  axios.post(`/api/delete`, {
+    id
+  })
+  .then(list => {
+    dispatch('get_downloading_list')
+    dispatch('get_doujinshi_list')
+  })
+}
+
 export default {
   get_doujinshi_list,
   get_doujinshi_info,
   access_ws,
   login,
-  get_downloading_list
+  get_downloading_list,
+  delete_doujinshi
 }

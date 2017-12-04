@@ -33,6 +33,7 @@ export default {
       this.$http.post('/api/download', {
         url: this.download_link
       }).then(res => {
+        console.log(res)
         if(res.accepted)
           this.download_link = ''
         else

@@ -45,6 +45,12 @@ class Doujinshi
     ).map(&:filename)
   end
 
+  # before :destroy do
+  #   doujinshi_meta.destroy
+  #   download_task.destroy
+  #   doujinshi_image.destroy
+  # end
+
   after :create, :create_task
 
   def create_task

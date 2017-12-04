@@ -24,6 +24,7 @@ module Downloader
   end
 
   def dir_name!()
+    p @meta
     title = if @meta.title.nil?
         default_lang = KeyValue['dir_lang'].to_sym
         if @meta.title_lang.has_key? default_lang

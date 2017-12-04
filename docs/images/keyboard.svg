@@ -26,7 +26,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
-     inkscape:cx="772.07702"
+     inkscape:cx="688.23436"
      inkscape:cy="75.627344"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -1746,7 +1746,7 @@
          id="tspan6757"><tspan
            x="455.98312"
            y="822.41492"
-           id="tspan6759">SELECT</tspan></tspan></text>
+           id="tspan6759">SELECT/SEARCH</tspan></tspan></text>
     <rect
        style="fill:#ff2a2a"
        id="rect4140"
@@ -1787,7 +1787,7 @@
          sodipodi:role="line"
          x="887.10046"
          y="818.20209"
-         id="tspan6757-5">ROTATE<tspan
+         id="tspan6757-5">ROTATE/RANDOM<tspan
    x="887.10046"
    y="818.20209"
    id="tspan6759-3" /></tspan></text>

@@ -4,7 +4,9 @@ module DownloadServer
   def start
     @stop_flag = false
     @fiber = nil
-    @thread = Thread.new do
+    @all_task_finished = false
+    @thread = Thread.new do |thread|
+      # thread.abort_on_exception = true
       $logger.debug 'Download Server Started'
       until @stop_flag
         until $download_server_start_queue.empty?
@@ -17,13 +19,16 @@ module DownloadServer
         if @fiber.nil?
           if Downloader.has_task?
             $logger.debug 'Proc New Task'
-            @downloader = Downloader.start_top_task!
+            @downloader = Downloader.start_top_task!(true)
             @fiber = @downloader.fiber
             $logger.debug @downloader
             _update()
             _emit_message("Started: #{@downloader.doujinshi.url}")
           else
-            $logger.debug 'No More Task'
+            unless @all_task_finished
+              $logger.debug 'No More Task'
+              @all_task_finished = true
+            end
             sleep 2
             next
           end
@@ -41,6 +46,7 @@ module DownloadServer
           _update()
           @fiber = nil
         end
+        @all_task_finished = false
       end
       $logger.debug 'Download Server Stopped'
     end

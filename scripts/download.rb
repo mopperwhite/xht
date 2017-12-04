@@ -8,7 +8,7 @@ require './lib/downloader'
 if $0 == __FILE__
   p ARGV.first
   url = ARGV.first
-  if Downloader.exists?(url)
+  if url.nil? || Downloader.exists?(url)
     puts "Task exists: #{url}, ignored."
   else
     Downloader.add_task(url)

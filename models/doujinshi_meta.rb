@@ -39,6 +39,12 @@ class DoujinshiMeta
     )
   end
 
+  # before :destroy do
+  #   doujinshi_tag.destroy
+  #   doujinshi_character.destroy
+  #   doujinshi_title.destroy
+  # end
+
   def DoujinshiMeta.from_struct(meta, doujinshi)
     h = meta.to_h
     title = h.delete :title

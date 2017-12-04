@@ -55,6 +55,7 @@ module Downloader
   end
 
   def download_image(url, name)
+    @messages.push "IMG: #{url}"
     path = File.join(@doujinshi_dir, dir_name, name)
     FileUtils.remove_file(path) if File.exists?(path)
     agent.get(url).save(path)

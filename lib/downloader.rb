@@ -53,7 +53,8 @@ class << Downloader
 
   def start()
     while has_task?
-      start_top_task!
+      downloader = start_top_task!(false)
+      p downloader.task.url
     end
   end
 
@@ -65,9 +66,9 @@ class << Downloader
     Doujinshi.top_task
   end
 
-  def start_top_task!
+  def start_top_task!(server_mode)
     doujinshi = top_task
-    download_by_doujinshi(doujinshi, true, KeyValue['save_dir'])
+    download_by_doujinshi(doujinshi, server_mode, KeyValue['save_dir'])
   end
 
   def get_downloader_by_doujinshi(doujinshi, dir)

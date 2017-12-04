@@ -4,7 +4,7 @@ require "sinatra/reloader"
 
 class WebViewer < Sinatra::Base
 
-  # use Rack::Session::Moneta, store: Moneta.new(:DataMapper, setup: $database_file)
+  use Rack::Session::Moneta, store: Moneta.new(:DataMapper, setup: $database_path)
 
   # configure :development do
   configure do
@@ -13,7 +13,7 @@ class WebViewer < Sinatra::Base
 
   set :public_folder, 'public'
 
-  use Rack::Session::Pool
+  # use Rack::Session::Pool
   use Rack::PostBodyContentTypeParser
 
   # use Rack::Auth::Basic do |username, password|

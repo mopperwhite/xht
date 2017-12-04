@@ -12,6 +12,12 @@ class DownloadTask
   belongs_to  :doujinshi
   has n,      :stored_queue, :constraint => :destroy
   
+  after :destroy do
+    # stored_queue.destroy
+    $logger.debug "RM DIR: #{dir}"
+    FileUtils.remove_dir(dir) if dir
+  end
+
   def queue(type)
     DownloadTaskQueue.new self, type
   end
