@@ -2,6 +2,7 @@
 #encoding=utf-8
 require 'pry'
 require './lib/init'
+require './lib/plugins'
 # require './lib/db'
 # require './lib/dsl_builder'
 # require './lib/importer'

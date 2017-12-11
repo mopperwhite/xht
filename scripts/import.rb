@@ -3,7 +3,7 @@
 require './lib/init'
 require './lib/db'
 require './lib/dsl_builder'
-require './lib/importer'
+require './lib/plugins'
 
 if __FILE__ == $0
   importer, path = ARGV

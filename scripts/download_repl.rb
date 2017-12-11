@@ -3,7 +3,7 @@
 require './lib/init'
 require './lib/db'
 require './lib/dsl_builder'
-require './lib/downloader'
+require './lib/plugins'
 require './lib/download_server'
 
 if $0 == __FILE__

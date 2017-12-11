@@ -43,7 +43,7 @@ module Downloader
       max_length.is_a?(Numeric) && 
       max_length > 0 && 
       title.length > max_length
-    title
+    title.gsub(/[\/\\]/, '$')
   end
 end
 

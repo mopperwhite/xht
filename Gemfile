@@ -14,3 +14,6 @@ gem 'rack-contrib',       require: 'rack/contrib'
 gem 'sinatra-reloader',   require: 'sinatra/reloader'
 gem 'activesupport',      require: 'active_support/all'
 gem 'moneta',             require: ['moneta', 'rack/session/moneta']
+Dir['plugins/*/Gemfile'].each do |path|
+  load path
+end

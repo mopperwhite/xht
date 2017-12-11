@@ -73,7 +73,7 @@ class << Downloader
 
   def get_downloader_by_doujinshi(doujinshi, dir)
     down_class  = $downloaders.detect{|d| d.match?(doujinshi.url, doujinshi.download_task.tag)}
-    raise RuntimeError.new "No matched donwloader for: #{url}" if down_class.nil?
+    raise RuntimeError.new "No matched donwloader for: #{doujinshi.url}" if down_class.nil?
     downloader  = down_class.new(doujinshi, dir)
   end
 
@@ -86,4 +86,4 @@ end
 
 require './helpers/downloader/agent'
 require './helpers/downloader/download'
-require './helpers/downloader/load'
+# require './helpers/downloader/load'

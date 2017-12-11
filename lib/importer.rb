@@ -37,6 +37,6 @@ module Importer
   end
 end
 
-Dir['./importers/*.rb'].each do |f|
-  load f, true
-end
+# Dir['./importers/*.rb'].each do |f|
+#   load f, true
+# end

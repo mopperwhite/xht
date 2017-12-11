@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import {get_title, shorten_title} from '../helpers'
 import bus from '../bus'
 import io from '../io'
@@ -30,7 +31,7 @@ export default {
   },
   methods: {
     download(){
-      this.$http.post('/api/download', {
+      axios.post('/api/download', {
         url: this.download_link
       }).then(res => {
         console.log(res)

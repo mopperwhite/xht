@@ -7,6 +7,7 @@ require './lib/downloader'
 require './lib/download_server'
 require './lib/importer'
 require './lib/app'
+require './lib/plugins'
 
 
 DownloadServer.start

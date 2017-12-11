@@ -15,7 +15,7 @@ class DownloadTask
   after :destroy do
     # stored_queue.destroy
     $logger.debug "RM DIR: #{dir}"
-    FileUtils.remove_dir(dir) if dir
+    FileUtils.remove_dir(File.join('doujinshi', dir)) if dir
   end
 
   def queue(type)
