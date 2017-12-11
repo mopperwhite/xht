@@ -2,10 +2,10 @@ node_modules/
 db.sqlite3
 doujinshi/
 plugins/
-^plugins/e-hentai
-^plugins/nhentai
-^plugins/directory
-^plugins/pdf
+^plugins/e-hentai/
+^plugins/nhentai/
+^plugins/directory/
+^plugins/pdf/
 cookies/
 ^cookies/e-hentai.yaml
 ^cookies/nhentai.yaml
